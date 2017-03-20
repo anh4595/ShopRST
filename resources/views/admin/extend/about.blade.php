@@ -94,8 +94,8 @@
 											<td>Đã kích hoạt</td>
 										@endif            
                                         <td>
-                                            <a href = "#">Sửa |</a>
-                                            <a href = "#">Xóa</a>
+                                            <a href = "{!! URL::route('admin.about.getEdit',$item->id) !!}" value="{!! $item->id !!}">Sửa |</a>
+                                            <a href = "{!! URL::route('admin.about.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach

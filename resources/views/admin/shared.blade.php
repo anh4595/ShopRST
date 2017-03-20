@@ -47,6 +47,7 @@
 							<ul class = "sub-menu collapse" id = "product">
 								<li><a href = "{!! URL('admin/san-pham') !!}"><span class = "glyphicon glyphicon-paperclip" aria-hidden = "true">&nbsp;</span>Tất cả sản phẩm</a></li>
 								<li><a href = "{!! URL('admin/san-pham/danh-muc-san-pham') !!}"><span class = "glyphicon glyphicon-folder-open" aria-hidden = "true">&nbsp;</span>Danh mục sản phẩm</a></li>
+								<li><a href = "{!! URL('admin/san-pham/size') !!}"><span class = "glyphicon glyphicon-transfer" aria-hidden = "true">&nbsp;</span>Quản lý kích thước</a></li>
 							</ul>
 							<li data-toggle = "collapse" data-target = "#customer" class = "collapsed">
 								<a href = "#"><span class = "glyphicon glyphicon-heart" aria-hidden = "true">&nbsp;</span>Khách hàng<span class = "caret"></span></a>

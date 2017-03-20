@@ -1,17 +1,17 @@
 @extends('admin.shared')
 @section('content')
 <?php
-	$list_tag = DB::table('tags')->orderBy('id')->get();
-	$count_tag = count($list_tag);
+	$list_sizes = DB::table('sizes')->get();
+	$count_size = count($list_sizes);
 ?>
-	<h1><span class = "glyphicon glyphicon-folder-open addtop" aria-hidden = "true"></span>&nbsp;&nbsp;Thẻ tag</h1>	
+	<h1><span class = "glyphicon glyphicon-folder-open addtop" aria-hidden = "true"></span>&nbsp;&nbsp;Danh mục sản phẩm</h1>	
 				<div id = "sub-main">
 					<div class = "row">
 						<div class = "col-xs-12 col-sm-7 col-md-8 col-lg-9">
 							<ol class = "breadcrumb">
 								<li>Hệ thống</li>
-								<li>Thẻ tag</li>
-								<li class = "active">Thẻ tag</li>
+								<li>Sản phẩm</li>
+								<li class = "active">Danh mục sản phẩm</li>
 							</ol>
 						</div>
 						<div class = "hidden-xs col-sm-5 col-md-4 col-lg-3 text-right">
@@ -25,7 +25,7 @@
 					</div>
 					<div class = "row space-top">
 						<div class = "col-xs-12 col-sm-12 col-md-4 col-lg-4 option-h4 text-justify">
-							<h4>Thêm thẻ tag</h4>
+							<h4>Thêm danh mục</h4>
 							@if(count($errors)>0)
 								<div class="alert alert-danger">
 									<ul>
@@ -35,28 +35,20 @@
 									</ul>
 								</div>
 							@endif
-							<form action="{!! route('admin.tag.tag') !!}" method="POST">
+							<form action="{!! route('admin.product.size') !!}" method="POST">
 								<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-								<div class = "form-group">
-									<label>Mã code</label>
-									<input type = "text" class = "form-control" name="namecode" placeholder = "Nhập mã code thẻ tag">
-									<p><i>Bạn nên đặt mã code để phân loại các thẻ tag của mình.</i></p>
-								</div>
-								<div class = "form-group">
-									<label>Tên thẻ tag</label>
-									<input type = "text" class = "form-control" name="nametag" placeholder = "Nhập tên thẻ tag của bạn">
-									<p><i>Bạn nên đặt tên thẻ tag để phân loại các thẻ tag của mình.</i></p>
-								</div>
                                 <div class = "form-group">
-									<label>Chọn thể loại</label>
-									<select class = "form-control" name="type">
-                                        <option value="product">Sản phẩm</option>
-                                        <option value="post">Bài viết</option>
-									</select>
-									<p><i>Bạn vui lòng chọn thể loại tag.</i></p>
+									<label>Mã code</label>
+									<input type = "text" class = "form-control" name="namecode" placeholder = "Nhập mã code kích thước của bạn">
+									<p><i>Bạn có thể đặt mã code theo ý của mình.</i></p>
 								</div>	
+								<div class = "form-group">
+									<label>Kích thước</label>
+									<input type = "text" class = "form-control" name="namesize" placeholder = "Nhập kích thước của bạn">
+									<p><i>Bạn nên đặt kích thước để phân loại các kích thước khác của sản phẩm.</i></p>
+								</div>
                                 <div class = "col-xs-12 col-sm-5 col-md-7 col-lg-7" style="float: right;margin-right: -20%;">
-									<button type="submit" name="submit" class="btn btn-danger btn-lg">Thêm mới</button>
+									<button type="submit" class = "btn btn-danger btn-lg">Thêm mới</button>
 								</div>
 							</form>
 						</div>
@@ -74,7 +66,7 @@
 							</div>
 							<div class = "row space-top box-total">
 								<div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                    <span><i>Tổng số thẻ tag: </i><strong>{!! $count_tag !!}</strong> |</span>
+                                    <span><i>Tổng số kích thước: </i><strong>{!! $count_size !!}</strong></span>        
 								</div>
 								<div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<div class = "text-right">
@@ -90,24 +82,22 @@
 										<thead>
                                            <tr>
                                                 <th><input type = "checkbox" value = "" /></th>
-                                                <th>Tên thẻ tag</th>
-                                                <th>Loại thẻ tag</th>
+                                                <th>Mã code</th>
+                                                <th>Kích thước</th>
                                                 <th>Ngày tạo</th>
-                                                <th>Ngày cập nhật</th>
                                                 <th>Chức năng</th>
 									        </tr>
 								        </thead>
 										<tbody>
-                                            @foreach($list_tag as $item)
+                                            @foreach($list_sizes as $item)
                                                 <tr>
                                                     <td><input type = "checkbox" value = "" /></td>
+                                                    <td>{!! $item->id !!}</td>
                                                     <td>{!! $item->name !!}</td>
-                                                    <td>{!! $item->type !!}</td>
-													<td>{!! $item->created_at !!}</td>
-                                                    <td>{!! $item->updated_at !!}</td>
+                                                    <td>{!! $item->created_at !!}</td>
                                                     <td>
-                                                        <a href = "{!! URL::route('admin.tag.getEdit',$item->id) !!}" value="{!! $item->id !!}">Sửa |</a>
-                                                        <a href = "{!! URL::route('admin.tag.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
+                                                        <a href = "{!! URL::route('admin.size.getEdit',$item->id) !!}" value="{!! $item->id !!}">Sửa |</a>
+                                                        <a href = "{!! URL::route('admin.size.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

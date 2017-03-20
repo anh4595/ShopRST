@@ -18,4 +18,12 @@ class CustomerController extends Controller
         return view('admin.customer.feedback');
     }
 
+    public function getDelete($id)
+    {
+        $customer = Customers::find($id);
+        $customer->delete($id);
+        return redirect()->route('admin.customer.customer');
+    }
+    
+
 }

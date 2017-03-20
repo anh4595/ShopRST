@@ -176,7 +176,7 @@
 													@endif
                                                     <td>
                                                         <a href = "{!! URL('admin/san-pham/sua-danh-muc-san-pham') !!}">Sửa</a>
-                                                        <a href = "#">Xóa</a>
+                                                        <a href = "{!! URL::route('admin.productcategory.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
                                                     </td>
                                                 </tr>
                                             @endforeach

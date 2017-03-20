@@ -37,4 +37,30 @@ class PostCategoryController extends Controller
         $postCategory->save();
         return redirect()->route('admin.post.postcategory');
     }
+
+    public function getDelete($id)
+    {
+        $postCategory = PostCategories::find($id);
+        $postCategory->delete($id);
+        return redirect()->route('admin.post.postcategory');
+    }  
+
+    public function getEdit($id)
+    {
+        $postCategory = PostCategories::findOrFail($id)->toArray();
+        return view('admin.extend.editfooter',compact('postCategory','id'));
+
+    }
+
+    public function postEdit(Request $request,$id)
+    {
+        $this->validate($request,
+            ["name" => "required"],
+            ["namecontact.required" => "Vui lòng nhập tên bài giới thiệu"]);
+
+        $postCategory = PostCategories::find($id);
+        $postCategory->content = $request->detail;
+        $postCategory->save();
+        return redirect()->route('admin.extend.footer');
+    }  
 }

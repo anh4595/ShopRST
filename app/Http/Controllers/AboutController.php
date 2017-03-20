@@ -34,4 +34,33 @@ class AboutController extends Controller
         $about->save();
         return redirect()->route('admin.extend.about');
     }
+
+    public function getDelete($id)
+    {
+        $about = Abouts::find($id);
+        $about->delete($id);
+        return redirect()->route('admin.extend.about');
+    }
+
+    public function getEdit($id)
+    {
+        $about = Abouts::findOrFail($id)->toArray();
+        return view('admin.extend.editabout',compact('about','id'));
+
+    }
+
+    public function postEdit(Request $request,$id)
+    {
+        $this->validate($request,
+            ["nameabout" => "required"],
+            ["nameabout.required" => "Vui lòng nhập tên bài giới thiệu"]);
+
+        $about = Abouts::find($id);
+        $about->name = $request->nameabout;
+        $about->detail = $request->detail;
+        $about->updatedby = $request->updateby;
+        $about->createdby = $request->createby;
+        $about->save();
+        return redirect()->route('admin.extend.about');
+    }
 }

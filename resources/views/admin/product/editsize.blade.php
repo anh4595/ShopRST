@@ -23,21 +23,13 @@
 						<div class = "option-h4 text-justify">
 							<h4>Sửa danh mục</h4>
 							<form action="" method="POST">
-								<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+                                <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
 								<div class = "form-group">
-									<label>Tên thẻ tag</label>
-									<input type = "text" class = "form-control" name="nametag" placeholder = "Nhập tên thẻ tag của bạn" value="{!! old('nametag',isset($tag) ? $tag['name'] : NULL) !!}">
-									<p><i>Bạn nên đặt tên thẻ tag để phân loại các thẻ tag của mình.</i></p>
+									<label>Kích thước</label>
+									<input type = "text" class = "form-control" name="namesize" placeholder = "Nhập kích thước của bạn" value="{!! old('namesize',isset($size) ? $size['name'] : NULL) !!}">
+									<p><i>Bạn nên đặt kích thước để phân loại các kích thước khác của sản phẩm.</i></p>
 								</div>
-                                <div class = "form-group">
-									<label>Chọn thể loại</label>
-									<select class = "form-control" name="type">
-                                        <option value="product">Sản phẩm</option>
-                                        <option value="post">Bài viết</option>
-									</select>
-									<p><i>Bạn vui lòng chọn thể loại tag.</i></p>
-								</div>	
-								<button type="submit" class = "btn btn-danger btn-lg">Lưu lại</button>
+                            	<button type="submit" class = "btn btn-danger btn-lg">Cập nhật</button>
 							</form>
 						</div>
 					</div>

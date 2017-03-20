@@ -75,7 +75,7 @@
 										<th><input type = "checkbox" value = "" /></th>
 										<th>Tên liên hệ</th>
 										<th>Điện thoại</th>
-										<th>Email</th>
+										<th style="width: 200px;">Email</th>
 										<th>Website</th>
                                         <th>Địa chỉ</th>
 										<th>Lat</th>
@@ -102,8 +102,8 @@
 											<td>Đã kích hoạt</td>
 										@endif            
                                         <td>
-                                            <a href = "#">Sửa |</a>
-                                            <a href = "#">Xóa</a>
+                                            <a href = "{!! URL::route('admin.contact.getEdit',$item->id) !!}" value="{!! $item->id !!}">Sửa |</a>
+                                            <a href = "{!! URL::route('admin.contact.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
                                         </td>
                                     </tr>
                                 @endforeach()

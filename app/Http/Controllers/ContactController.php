@@ -39,4 +39,36 @@ class ContactController extends Controller
         $contact->save();
         return redirect()->route('admin.extend.contact');
     }
+
+    public function getDelete($id)
+    {
+        $contact = Contacts::find($id);
+        $contact->delete($id);
+        return redirect()->route('admin.extend.contact');
+    }
+
+    public function getEdit($id)
+    {
+        $contact = Contacts::findOrFail($id)->toArray();
+        return view('admin.extend.editcontact',compact('contact','id'));
+
+    }
+
+    public function postEdit(Request $request,$id)
+    {
+        $this->validate($request,
+            ["namecompany" => "required"],
+            ["namecompany.required" => "Vui lòng nhập tên bài giới thiệu"]);
+
+        $contact = Contacts::find($id);
+        $contact->name = $request->namecompany;
+        $contact->phone = $request->phone;
+        $contact->email = $request->email;
+        $contact->website = $request->website;
+        $contact->address = $request->address;
+        $contact->lat = $request->lat;
+        $contact->lng = $request->lng;
+        $contact->save();
+        return redirect()->route('admin.extend.contact');
+    }
 }

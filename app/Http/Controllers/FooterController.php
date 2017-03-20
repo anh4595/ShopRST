@@ -32,4 +32,30 @@ class FooterController extends Controller
         $footer->save();
         return redirect()->route('admin.extend.footer');
     }
+
+    public function getDelete($id)
+    {
+        $footer = Footers::find($id);
+        $footer->delete($id);
+        return redirect()->route('admin.extend.footer');
+    }
+
+    public function getEdit($id)
+    {
+        $footer = Footers::findOrFail($id)->toArray();
+        return view('admin.extend.editfooter',compact('footer','id'));
+
+    }
+
+    public function postEdit(Request $request,$id)
+    {
+        $this->validate($request,
+            ["detail" => "required"],
+            ["detail.required" => "Vui lòng nhập nội dung chân trang"]);
+
+        $footer = Footers::find($id);
+        $footer->content = $request->detail;
+        $footer->save();
+        return redirect()->route('admin.extend.footer');
+    }
 }

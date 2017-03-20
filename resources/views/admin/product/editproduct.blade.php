@@ -39,23 +39,23 @@
 						<div class = "panel-body">
 							<div class = "form-group">
 								<label>Tên sản phẩm</label>
-								<input type = "text" class = "form-control" name="nameproduct" placeholder = "Nhập tiêu đề bài viết">
+								<input type = "text" class = "form-control" name="nameproduct" placeholder = "Nhập tiêu đề bài viết" value="{!! old('nameproduct',isset($product) ? $product['name'] : NULL) !!}">
 							</div>
 							<div class = "form-group">
 								<label>Metatitle</label>
-								<input type = "text" class = "form-control" name="metatitle" placeholder = "xe oto can cau">
+								<input type = "text" class = "form-control" name="metatitle" placeholder = "xe oto can cau" value="{!! old('metatitle',isset($product) ? $product['metatitle'] : NULL) !!}">
 							</div>
                             <div class = "form-group">
 								<label>Metakeyword</label>
-								<input type = "text" class = "form-control" name="metakeyword" placeholder = "xe-o-to-can-cau">
+								<input type = "text" class = "form-control" name="metakeyword" placeholder = "xe-o-to-can-cau" value="{!! old('metakeyword',isset($product) ? $product['metakeyword'] : NULL) !!}">
 							</div>
 							<div class = "form-group">
                                 <label>Mô tả nội dung</label>
-								<textarea class = "form-control" name="description" rows = "2"></textarea>
+								<textarea class = "form-control" name="description" rows = "2" value="{!! old('description',isset($product) ? $product['description'] : NULL) !!}"></textarea>
 							</div>
 							<div class = "form-group">
                                 <label>Nội dung chi tiết</label>
-								<textarea class = "form-control" name="detail" rows = "8" ></textarea>
+								<textarea class = "form-control" name="detail" rows = "8" value="{!! old('detail',isset($product) ? $product['detail'] : NULL) !!}"></textarea>
 							</div>
                 	        <div class = "form-group">
 								<label>Tags</label>
@@ -90,19 +90,7 @@
 								<div class = "panel-body">
 									<div class = "form-group">
 										<label>Số lượng nhập</label>
-										<input type = "text" class = "form-control" name="quantity">
-									</div>
-								</div>
-							</div>
-							<div class = "panel panel-default">
-								<div class = "panel-heading">
-									<span class = "glyphicon glyphicon-road" aria-hidden = "true">&nbsp;</span>Quảng bá
-								</div>
-								<div class = "panel-body">
-									<div class = "checkbox">
-										<label><input type = "checkbox" name="hotflag" value="1">Sản phẩm HOT</label>
-										<label style="margin-left: 5%;"><input type = "checkbox" name="homeflag" value="1" >Sản phẩm Home</label>
-										<label style="margin-left: 5%;"><input type = "checkbox" name="promotionflag" value="1">Sản phẩm Sale</label>
+										<input type = "text" class = "form-control" name="quantity" value="{!! old('quantity',isset($product) ? $product['quantity'] : NULL) !!}">
 									</div>
 								</div>
 							</div>
@@ -116,13 +104,13 @@
 									<div class = "form-group">
 										<div class = "input-group">
 											<label>Đơn giá</label>
-											<input type = "text" class = "form-control" placeholder = "12.000" name="price">
+											<input type = "text" class = "form-control" placeholder = "12.000" name="price" value="{!! old('price',isset($product) ? $product['price'] : NULL) !!}">
 										</div>
 									</div>
 									<div class = "form-group">
 										<div class = "input-group">
 											<label>Giá khuyến mãi</label>
-											<input type = "text" class = "form-control" placeholder = "8.000" name="promotionprice">
+											<input type = "text" class = "form-control" placeholder = "8.000" name="promotionprice" value="{!! old('promotionprice',isset($product) ? $product['promotionprice'] : NULL) !!}">
 										</div>
 									</div>
 								</div>
@@ -141,7 +129,7 @@
 							?>
 							@foreach($list_category as $item)
 							<div class = "checkbox">
-								<label><input type = "radio" name="category_id" value="{!! $item->id !!}">{!! $item->name !!}</label>
+								<label><input type = "radio" name="category_id" value="{!! old('category_id',isset($product) ? $product['category_id'] : NULL) !!}">{!! $item->name !!}</label>
 							</div>
 							@endforeach()
 						</div>
@@ -153,7 +141,7 @@
 						</div>
 						<div class = "panel-body">
 							<div class = "form-group">
-								<input type = "file" name="image">
+								<input type = "file" name="image" value="{!! old('image',isset($product) ? $product['image'] : NULL) !!}">
 							</div>
 						</div>
 					</div>
@@ -167,13 +155,13 @@
 								<input type = "file" name="imagedetail1" />
 							</div>
 							<div class = "form-group">
-								<input type = "file" name="imagedetail2" />
+								<input type = "file" name="imagedetail2"  />
 							</div>
 							<div class = "form-group">
-								<input type = "file" name="imagedetail3" />
+								<input type = "file" name="imagedetail3"  />
 							</div>
 							<div class = "form-group">
-								<input type = "file" name="imagedetail4" />
+								<input type = "file" name="imagedetail4"  />
 							</div>
 						</div>						
 					</div>
@@ -184,12 +172,6 @@
 						</div>
 
 						<div class = "panel-body">
-							<div class = "radio">
-								<label><input type="radio" name="status" value="1" checked>Hiển thị sản phẩm</label>
-							</div>
-							<div class = "radio">
-								<label><input type="radio" name="status" value="0">Chưa hiển thị sản phẩm</label>
-							</div>
 							<div class = "form-group">
 								<label>Ngày đăng</label>
 								<?php 
@@ -199,11 +181,11 @@
 							</div>
 							<div class = "form-group">
 								<label>Người đăng</label>
-								<input type="text" class = "form-control" name="createby">
+								<input type="text" class = "form-control" name="createby" value="{!! old('createby',isset($product) ? $product['create_by'] : NULL) !!}">
 							</div>
 							<div class = "form-group">
 								<label>Người cập nhật</label>
-								<input type="text" class = "form-control" name="updateby">
+								<input type="text" class = "form-control" name="updateby" value="{!! old('updateby',isset($product) ? $product['update_by'] : NULL) !!}">
 							</div>
 						</div>
 						

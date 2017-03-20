@@ -18,23 +18,36 @@ class PostController extends Controller
         return view('admin.post.addpost');
     }
 
-    public function postPostCategory(PostRequest $request)
+    public function postPost(PostRequest $request)
     {
-        $postCategory = new PostCategories();
-        $postCategory->name = $request->category;
-        $postCategory->metatitle = $request->metatitle;
-        $postCategory->description = $request->description;
-        $postCategory->updatedby = $request->updateby;
-        $postCategory->createdby = $request->createby;
-        if(isset($_POST['status']))
-        {
-            $postCategory->status = 1;
-        }  
-        else 
-        {
-            $postCategory->status = 0;
+        $post = new Posts();
+        $post->name = $request->namepost;
+        $post->category_id = $request->category_id;
+        $post->metatitle = $request->metatitle;
+        $post->metakeyword = $request->metakeyword;
+        $post->image = $request->image;   
+        $post->detail = $request->detail;
+        $post->description = $request->description;
+        $post->createdby = $request->createby;
+        $post->updatedby = $request->updateby;
+        if (isset($_POST['tag'])){
+            $post->tag = implode(',', $_POST['tag']);
         }
-        $postCategory->save();
+        if (isset($_POST['submit'])) 
+        {
+            if(isset($_POST['status']))
+            {
+                $post->status = $_POST['status'];
+            }  
+        }
+        $post->save();
+        return redirect()->route('admin.post.post');
+    }
+
+    public function getDelete($id)
+    {
+        $post = Posts::find($id);
+        $post->delete($id);
         return redirect()->route('admin.post.post');
     }
 }

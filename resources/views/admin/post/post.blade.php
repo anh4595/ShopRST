@@ -89,17 +89,17 @@
 								{
 									<tr>
 										<td><input type = "checkbox" value = "" /></td>
-										<td><img class = "img-responsive" src = "{{url('admin/public/images/'.$item->image)}}" alt = "" /></td>
+										<td><img class = "img-responsive" src = "{{url('public/assets/data/'.$item->image)}}" alt = "" /></td>
 										<td>{!! $item->name !!}</td>
 										<td>{!! $item->detail !!}</td>
-										<td>
-                                            <?php
-                                                $getNameCategory_byID = DB::table('postcategories')->where('id',$item->category_id)->get();
-                                            ?>
-                                            @foreach($getNameCategory_byID as $item)
-                                                {!! $item->name !!}
-                                            @endforeach
-                                        </td>
+										<?php
+                                            $getNameCategory_ByID=DB::table('postcategories')->where('id',$item->category_id)->get();
+                                        ?>
+										@foreach($getNameCategory_ByID as $itemName)
+										{
+											<td>{!! $itemName->name !!}</td>
+										}
+										@endforeach()
 										<td>{!! $item->metakeyword !!}</td>
 										<td>{!! $item->tag !!}</td>
 										<td>{!! $item->created_at !!}</td>
@@ -111,7 +111,7 @@
 										@endif 
 										<td>
 											<a href = "#">Sửa |</a>
-											<a href = "#">Xóa</a>
+											<a href = "{!! URL::route('admin.post.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
 										</td>
 									</tr>
 								}
