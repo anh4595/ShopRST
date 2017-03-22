@@ -1,8 +1,10 @@
 @extends('admin.shared')
 @section('content')	
 <?php
-	$list_slides= DB::table('slides')->orderBy('id')->get();
-	$count_slide = count($list_slides);
+	$list_slides= DB::table('slides')->orderBy('id')->paginate(5);
+
+	$list_count= DB::table('slides')->orderBy('id')->get();
+	$count_slide = count($list_count);
 
 	$count_enable = 0;
 	$count_disable = 0;
@@ -87,9 +89,13 @@
                                         <td>{!! $item->name !!}</td>
                                         <td>{!! $item->created_at !!}</td>
                             			@if($item->status == 0)
-											<td>Chưa kích hoạt</td>
+											<td>Chưa kích hoạt<br />
+												<a href = "{!! URL::route('admin.slide.changeStatus',$item->id) !!}">Bật</a>												
+											</td>
 										@elseif( $item->status == 1)
-											<td>Đã kích hoạt</td>
+											<td>Đã kích hoạt<br />
+												<a href = "{!! URL::route('admin.slide.changeStatus',$item->id) !!}">Tắt</a>
+											</td>
 										@endif            
                                         <td>
                                             <a href = "{!! URL::route('admin.slide.getEdit',$item->id) !!}" value="{!! $item->id !!}">Sửa |</a>
@@ -101,21 +107,25 @@
 						</div>
 						<nav>
 							<ul class="pagination">
-								<li>
-									<a href="#" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span>
-									</a>
-								</li>
-								<li class = "active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li>
-									<a href="#" aria-label="Next">
-										<span aria-hidden="true">&raquo;</span>
-									</a>
-								</li>
+								@if($list_slides->currentPage() != 1)
+									<li>
+										<a href="{!! str_replace('/?','?',$list_slides->url($list_slides->currentPage() - 1)) !!}" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									@endif
+									@for($i=1;$i<=$list_slides->lastPage();$i=$i+1)
+									<li class = "{!! ($list_slides->currentPage() == $i) ? 'active' : '' !!}">
+										<a href="{!! str_replace('/?','?',$list_slides->url($i)) !!}">{{ $i }}</a>
+									</li>
+									@endfor
+									@if($list_slides->currentPage() != $list_slides->lastPage())
+									<li>
+										<a href="{!! str_replace('/?','?',$list_slides->url($list_slides->currentPage() + 1)) !!}" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								@endif
 							</ul>
 						</nav>
 					</div>

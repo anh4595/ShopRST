@@ -1,8 +1,10 @@
 @extends('admin.shared')
 @section('content')	
 <?php
-	$list_abouts = DB::table('abouts')->orderBy('id')->get();
-	$count_about = count($list_abouts);
+	$list_abouts = DB::table('abouts')->orderBy('id')->paginate(5);
+
+	$list_count= DB::table('abouts')->orderBy('id')->get();
+	$count_about = count($list_count);
 
 	$count_enable = 0;
 	$count_disable = 0;
@@ -85,13 +87,17 @@
                                     <tr>
                                         <td><input type = "checkbox" value = "" /></td>
                                         <td>{!! $item->name !!}</td>
-                                        <td><?php echo htmlentities($item->detail)?></td>
+                                        <td><?php echo substr(htmlentities($item->detail),0,100) ?></td>
                                         <td>{!! $item->createdby !!}</td>
                                         <td>{!! $item->created_at !!}</td>
                             			@if($item->status == 0)
-											<td>Chưa kích hoạt</td>
+											<td>Chưa kích hoạt<br />
+												<a href = "{!! URL::route('admin.about.changeStatus',$item->id) !!}">Bật</a>											
+											</td>
 										@elseif( $item->status == 1)
-											<td>Đã kích hoạt</td>
+											<td>Đã kích hoạt<br />
+												<a href = "{!! URL::route('admin.about.changeStatus',$item->id) !!}">Tắt</a>
+											</td>
 										@endif            
                                         <td>
                                             <a href = "{!! URL::route('admin.about.getEdit',$item->id) !!}" value="{!! $item->id !!}">Sửa |</a>
@@ -103,21 +109,25 @@
 						</div>
 						<nav>
 							<ul class="pagination">
-								<li>
-									<a href="#" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span>
-									</a>
-								</li>
-								<li class = "active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li>
-									<a href="#" aria-label="Next">
-										<span aria-hidden="true">&raquo;</span>
-									</a>
-								</li>
+								@if($list_abouts->currentPage() != 1)
+									<li>
+										<a href="{!! str_replace('/?','?',$list_abouts->url($list_abouts->currentPage() - 1)) !!}" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									@endif
+									@for($i=1;$i<=$list_abouts->lastPage();$i=$i+1)
+									<li class = "{!! ($list_abouts->currentPage() == $i) ? 'active' : '' !!}">
+										<a href="{!! str_replace('/?','?',$list_abouts->url($i)) !!}">{{ $i }}</a>
+									</li>
+									@endfor
+									@if($list_abouts->currentPage() != $list_abouts->lastPage())
+									<li>
+										<a href="{!! str_replace('/?','?',$list_abouts->url($list_abouts->currentPage() + 1)) !!}" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								@endif
 							</ul>
 						</nav>
 					</div>

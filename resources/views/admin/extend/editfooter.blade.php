@@ -39,7 +39,8 @@
 										<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
 										<div class = "form-group">
                                             <label>Nội dung chi tiết</label>
-											<textarea class = "form-control" name="detail" rows = "8" value="{!! old('detail',isset($footer) ? $footer['content'] : NULL) !!}"></textarea>
+											<textarea class = "form-control" name="detail" rows = "8">{!! old('detail',isset($footer) ? $footer['content'] : NULL) !!}</textarea>
+											<script type="text/javascript">ckeditor("detail")</script>
 										</div>
 										<button type="submit" name="submit" class = "btn btn-danger btn-lg">Cập nhật</button>
 									</form>

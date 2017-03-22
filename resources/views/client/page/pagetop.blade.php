@@ -10,10 +10,14 @@
                       <div class="tab-container">
                             <div id="tab-1" class="tab-panel active">
                                 <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
+                                <?php
+                                    $list_best=DB::table('products')->where('status',1)->orderby('quantitysold','DESC')->skip(0)->take(10)->get();
+                                ?>
+                                @foreach($list_best as $item)
                                     <li>
                                         <div class="left-block">
                                             <a href="#">
-                                                <img class="img-responsive" alt="product" src="{{url('public/assets/data/bs1.jpg')}}" />
+                                                <img class="img-responsive" alt="product" src="{{url('public/assets/data/'.$item->image)}}" />
                                             </a>
                                             <div class="quick-view">
                                                     <a title="Add to my wishlist" class="heart" href="#"></a>
@@ -23,16 +27,12 @@
                                             <div class="add-to-cart">
                                                 <a title="Add to Cart" href="#">Add to Cart</a>
                                             </div>
-                                            <div class="group-price">
-                                                <span class="product-new">NEW</span>
-                                                <span class="product-sale">Sale</span>
-                                            </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Sexy Lady</a></h5>
+                                            <h5 class="product-name"><a href="#">{!! $item->name !!}</a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
+                                                <span class="price product-price">${!! $item->price !!}</span>
+                                                <span class="price old-price">${!! $item->promotionprice !!}</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
@@ -43,98 +43,19 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/bs2.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Perfect Dress</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/bs3.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="group-price">
-                                                <span class="product-new">NEW</span>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Fresh Summer</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/bs4.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Flowers Dress</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div id="tab-2" class="tab-panel">
                                 <ul class="product-list owl-carousel"  data-dots="false" data-loop="true" data-nav = "true" data-margin = "30"  data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
+                                <?php
+                                    $list_sale=DB::table('products')->where('status',1)->where('promotionflag',1)->orderby('id','DESC')->skip(0)->take(10)->get();
+                                ?>
+                                @foreach($list_sale as $itemsale)
                                     <li>
                                         <div class="left-block">
                                             <a href="#">
-                                            <img class="img-responsive" alt="product" src="{{url('public/assets/data/p48.jpg')}}" /></a>
+                                            <img class="img-responsive" alt="product" src="{{url('public/assets/data/'.$itemsale->image)}}" /></a>
                                             <div class="quick-view">
                                                     <a title="Add to my wishlist" class="heart" href="#"></a>
                                                     <a title="Add to compare" class="compare" href="#"></a>
@@ -145,10 +66,10 @@
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
+                                            <h5 class="product-name"><a href="#">{!! $itemsale->name !!}</a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
+                                                <span class="price product-price">${!! $itemsale->price !!}</span>
+                                                <span class="price old-price">${!! $item->promotionprice !!}</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
@@ -159,95 +80,18 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#">
-                                            <img class="img-responsive" alt="product" src="{{url('public/assets/data/p49.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/p50.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/p51.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                             <div id="tab-3" class="tab-panel">
                                 <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-margin = "30" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":3}}'>
+                                <?php
+                                     $list_new=DB::table('products')->where('status',1)->orderby('created_at','DESC')->skip(0)->take(10)->get();
+                                ?>
+                                @foreach($list_new as $itemnew)
                                     <li>
                                         <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/p60.jpg')}}" /></a>
+                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/'.$itemnew->image)}}" /></a>
                                             <div class="quick-view">
                                                     <a title="Add to my wishlist" class="heart" href="#"></a>
                                                     <a title="Add to compare" class="compare" href="#"></a>
@@ -258,10 +102,10 @@
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
+                                            <h5 class="product-name"><a href="#">{!! $itemnew->name !!}</a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
+                                                <span class="price product-price">${!! $itemnew->price !!}</span>
+                                                <span class="price old-price">${!! $item->promotionprice !!}</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
@@ -272,87 +116,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/p61.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/p62.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="left-block">
-                                            <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/p63.jpg')}}" /></a>
-                                            <div class="quick-view">
-                                                    <a title="Add to my wishlist" class="heart" href="#"></a>
-                                                    <a title="Add to compare" class="compare" href="#"></a>
-                                                    <a title="Quick view" class="search" href="#"></a>
-                                            </div>
-                                            <div class="add-to-cart">
-                                                <a title="Add to Cart" href="#">Add to Cart</a>
-                                            </div>
-                                        </div>
-                                        <div class="right-block">
-                                            <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                            <div class="content_price">
-                                                <span class="price product-price">$38,95</span>
-                                                <span class="price old-price">$52,00</span>
-                                            </div>
-                                            <div class="product-star">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    @endforeach
                                 </ul>
                             </div>
                       </div>
@@ -363,10 +127,14 @@
                     <h2 class="latest-deal-title">latest deals</h2>
                     <div class="latest-deal-content">
                         <ul class="product-list owl-carousel" data-dots="false" data-loop="true" data-nav = "true" data-autoplayTimeout="1000" data-autoplayHoverPause = "true" data-responsive='{"0":{"items":1},"600":{"items":3},"1000":{"items":1}}'>
+                        <?php
+                            $list_deals=DB::table('products')->where('status',1)->where('promotionflag',1)->orderby('created_at','DESC')->skip(0)->take(3)->get();
+                        ?>
+                        @foreach($list_deals as $itemdeals)
                             <li>
-                                <div class="count-down-time" data-countdown="2015/06/27"></div>
+                                <div class="count-down-time" data-countdown="2017/03/27 9:20:00"></div>
                                 <div class="left-block">
-                                    <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/ld1.jpg')}}" /></a>
+                                    <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/'.$itemdeals->image)}}" /></a>
                                     <div class="quick-view">
                                             <a title="Add to my wishlist" class="heart" href="#"></a>
                                             <a title="Add to compare" class="compare" href="#"></a>
@@ -377,58 +145,15 @@
                                     </div>
                                 </div>
                                 <div class="right-block">
-                                    <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
+                                    <h5 class="product-name"><a href="#">{!! $itemdeals->name !!}</a></h5>
                                     <div class="content_price">
-                                        <span class="price product-price">$38,95</span>
-                                        <span class="price old-price">$52,00</span>
-                                        <span class="colreduce-percentage">(-10%)</span>
+                                        <span class="price product-price">${!! $itemdeals->price !!}</span>
+                                        <span class="price old-price">${!! $item->promotionprice !!}</span>
+                                        <span class="colreduce-percentage">(-60%)</span>
                                     </div>
                                 </div>
                             </li>
-                            <li>
-                                <div class="count-down-time" data-countdown="2015/06/27 9:20:00"></div>
-                                <div class="left-block">
-                                    <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/ld2.jpg')}}" /></a>
-                                    <div class="quick-view">
-                                            <a title="Add to my wishlist" class="heart" href="#"></a>
-                                            <a title="Add to compare" class="compare" href="#"></a>
-                                            <a title="Quick view" class="search" href="#"></a>
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <a title="Add to Cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="right-block">
-                                    <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                    <div class="content_price">
-                                        <span class="price product-price">$38,95</span>
-                                        <span class="price old-price">$52,00</span>
-                                        <span class="colreduce-percentage">(-90%)</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="count-down-time" data-countdown="2015/06/27 9:20:00"></div>
-                                <div class="left-block">
-                                    <a href="#"><img class="img-responsive" alt="product" src="{{url('public/assets/data/ld3.jpg')}}" /></a>
-                                    <div class="quick-view">
-                                            <a title="Add to my wishlist" class="heart" href="#"></a>
-                                            <a title="Add to compare" class="compare" href="#"></a>
-                                            <a title="Quick view" class="search" href="#"></a>
-                                    </div>
-                                    <div class="add-to-cart">
-                                        <a title="Add to Cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="right-block">
-                                    <h5 class="product-name"><a href="#">Maecenas consequat mauris</a></h5>
-                                    <div class="content_price">
-                                        <span class="price product-price">$38,95</span>
-                                        <span class="price old-price">$52,00</span>
-                                        <span class="colreduce-percentage">(-20%)</span>
-                                    </div>
-                                </div>
-                            </li>
+                        @endforeach 
                         </ul>
                     </div>
                 </div>

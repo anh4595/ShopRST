@@ -51,11 +51,13 @@
 							</div>
 							<div class = "form-group">
                                 <label>Mô tả nội dung</label>
-								<textarea class = "form-control" name="description" rows = "2"></textarea>
+								<textarea class = "form-control" name="descriptions" rows = "2"></textarea>
+								<script type="text/javascript">ckeditor("descriptions")</script>
 							</div>
 							<div class = "form-group">
                                 <label>Nội dung chi tiết</label>
 								<textarea class = "form-control" name="detail" rows = "8" ></textarea>
+								<script type="text/javascript">ckeditor("detail")</script>
 							</div>
                 	        <div class = "form-group">
 								<label>Tags</label>
@@ -136,14 +138,15 @@
 							<span class = "glyphicon glyphicon-folder-open" aria-hidden = "true">&nbsp;</span>Danh mục
 						</div>
 						<div class = "panel-body">
-							<?php
-								$list_category=DB::table('productcategories')->orderby('id')->get();
-							?>
-							@foreach($list_category as $item)
-							<div class = "checkbox">
-								<label><input type = "radio" name="category_id" value="{!! $item->id !!}">{!! $item->name !!}</label>
-							</div>
-							@endforeach()
+							<select class = "form-control" name="category_id">
+								<option value="0">Không có cha</option>
+                                	<?php
+                                        $list_parent=DB::table('productcategories')->get();
+                                    ?>
+                                    @foreach($list_parent as $item)
+                                        <option value="{!! $item->id !!}">{!! $item->name !!}</option>
+                                     @endforeach
+							</select>
 						</div>
 					</div>
 

@@ -1,8 +1,10 @@
 @extends('admin.shared')
 @section('content')
 <?php
-	$list_productcategory = DB::table('productcategories')->orderBy('id')->get();
-	$count_productcategory = count($list_productcategory);
+	$list_productcategory = DB::table('productcategories')->orderBy('id')->paginate(18);
+
+	$list_count = DB::table('productcategories')->orderBy('id')->get();
+	$count_productcategory = count($list_count);
 
 	$count_enable = 0;
 	$count_disable = 0;
@@ -62,10 +64,10 @@
 								</div>	
                                 <div class = "form-group">
 									<label>Chọn danh mục cha</label>
-									<select class = "form-control" name="parent_id">
+									<select class = "form-control" name="category_id">
 										<option value="NULL">Không có cha</option>
                                         <?php
-                                            $list_parent=DB::table('productcategories')->where('parent_id',NULL)->get();
+                                            $list_parent=DB::table('productcategories')->get();
                                         ?>
                                         @foreach($list_parent as $item)
                                             <option value="{!! $item->id !!}">{!! $item->name !!}</option>
@@ -80,7 +82,8 @@
 								</div>
 								<div class = "form-group">
 									<label>Mô tả</label>
-									<textarea class = "form-control" name="description" rows = "3"></textarea>
+									<textarea class = "form-control" name="descriptions" rows = "3"></textarea>
+									<script type="text/javascript">ckeditor("descriptions")</script>
 									<p><i>	Bạn có thể mô tả thêm về danh mục này chứa những phần gì, bài viết nào, sản phẩm nào... 
 											Bạn có thể để trống, không bắt buộc.</i></p>
 								</div>
@@ -94,14 +97,20 @@
 									<input type = "text" class = "form-control" name="updateby" placeholder = "Nhập tên của người cập nhật danh mục">
 									<p><i>Bạn có thể nhập tên người cập nhật danh mục hoặc để nguyên.</i></p>
 								</div>
+								<div class = "form-group">
+									<label>Hình ảnh</label>
+									<div class = "panel-body">
+										<div class = "form-group">
+											<input type = "file" name="image">
+										</div>
+									</div>
+								</div>
                                 <div class = "form-group">
 									<span><label style="margin-right:3%">Kích hoạt</label> <input type = "checkbox" name="status" ></span>
 									<p><i>Bạn có thể tít chọn để danh mục hoạt động ngay hoặc để nguyên.</i></p>
 								</div>
                                 <div class = "col-xs-12 col-sm-5 col-md-7 col-lg-7" style="float: right;margin-right: -20%;">
-									<div class = "btn btn-danger btn-lg">
-										<button type="submit" class = "btn btn-danger btn-lg">Thêm mới</button>
-									</div>
+									<button type="submit" class = "btn btn-danger btn-lg">Thêm mới</button>
 								</div>
 							</form>
 						</div>
@@ -125,7 +134,7 @@
 								<div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<div class = "text-right">
 										<div class = "btn btn-danger btn-a">
-											<a href = "#">Xóa tất cả</a>
+											<a href = "{!! URL::route('admin.productcategory.multiDelete') !!}">Xóa tất cả</a>
 										</div>
 									</div>
 								</div>
@@ -135,14 +144,10 @@
 									<table class = "table table-striped table-bordered">
 										<thead>
                                            <tr>
-                                                <th><input type = "checkbox" value = "" /></th>
+                                                <th><input type = "checkbox"  value = "" /></th>
                                                 <th>Tên danh mục</th>
-                                                <th>Mô tả</th>
                                                 <th>Danh mục cha</th>
-                                                <th>Meta-title</th>
-                                                <th>Từ khóa</th>
                                                 <th>Ngày tạo</th>
-                                                <th>Người tạo</th>
                                                 <th>Trạng thái</th>
                                                 <th>Chức năng</th>
 									        </tr>
@@ -150,9 +155,8 @@
 										<tbody>
                                             @foreach($list_productcategory as $item)
                                                 <tr>
-                                                    <td><input type = "checkbox" value = "" /></td>
+                                                    <td><input type = "checkbox" name="checkboxDel[]" value = "{!! $item->id !!}" /></td>
                                                     <td>{!! $item->name !!}</td>
-                                                    <td>{!! $item->description !!}</td>
                                                     @if($item->parent_id == NULL)
 														<td>Không có</td>
 													@else
@@ -165,17 +169,18 @@
                                                             @endforeach
                                                         </td>
 													@endif 
-                                                    <td>{!! $item->metatitle !!}</td>
-                                                    <td>{!! $item->metakeyword !!}</td>
                                                     <td>{!! $item->created_at !!}</td>
-                                                    <td>{!! $item->create_by !!}</td>
                                                     @if($item->status == 0)
-														<td>Chưa kích hoạt</td>
+														<td>Chưa kích hoạt <br />
+															<a href = "{!! URL::route('admin.productcategory.changeStatus',$item->id) !!}">Bật</a>
+														</td>
 													@elseif( $item->status == 1)
-														<td>Đã kích hoạt</td>
+														<td>Đã kích hoạt <br />
+															<a href = "{!! URL::route('admin.productcategory.changeStatus',$item->id) !!}">Tắt</a>
+														</td>
 													@endif
                                                     <td>
-                                                        <a href = "{!! URL('admin/san-pham/sua-danh-muc-san-pham') !!}">Sửa</a>
+                                                        <a href = "{!! URL::route('admin.productcategory.getEdit',$item->id) !!}">Sửa |</a>
                                                         <a href = "{!! URL::route('admin.productcategory.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
                                                     </td>
                                                 </tr>
@@ -183,12 +188,30 @@
 										</tbody>
 									</table>
 								</div>
+								<nav>
+									<ul class="pagination">
+										@if($list_productcategory->currentPage() != 1)
+										<li>
+											<a href="{!! str_replace('/?','?',$list_productcategory->url($list_productcategory->currentPage() - 1)) !!}" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+										@endif
+										@for($i=1;$i<=$list_productcategory->lastPage();$i=$i+1)
+										<li class = "{!! ($list_productcategory->currentPage() == $i) ? 'active' : '' !!}">
+											<a href="{!! str_replace('/?','?',$list_productcategory->url($i)) !!}">{{ $i }}</a>
+										</li>
+										@endfor
+										@if($list_productcategory->currentPage() != $list_productcategory->lastPage())
+										<li>
+											<a href="{!! str_replace('/?','?',$list_productcategory->url($list_productcategory->currentPage() + 1)) !!}" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+										@endif
+									</ul>
+								</nav>
 							</div>
-							<p>	
-								<i>	Chú ý: Việc bạn xóa bỏ danh mục không làm ảnh hưởng đến các bài viết. Tất cả các bài viết nằm trong
-									danh mục bị xóa hoặc chưa có tên trong danh mục sẽ được để mặc định trong danh mục tên là "Chưa có". 
-								</i>
-							</p>
 						</div>
 					</div>
 				</div>

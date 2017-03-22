@@ -1,8 +1,10 @@
 @extends('admin.shared')
 @section('content')
 <?php
-	$list_customer = DB::table('customers')->orderBy('id')->get();
-	$count_customer = count($list_customer);
+	$list_customer = DB::table('customers')->orderBy('id')->paginate(5);
+
+	$list_count = DB::table('customers')->orderBy('id')->get();
+	$count_customer = count($list_count);
 
 	$count_enable = 0;
 	$count_disable = 0;
@@ -90,13 +92,17 @@
 										<td>$item->username</td>
 										<td>$item->created_at</td>
 										@if($item->status == 0)
-											<td>Chưa kích hoạt</td>
+											<td>Chưa kích hoạt<br />
+												<a href = "{!! URL::route('admin.customer.changeStatus',$item->id) !!}">Bật</a>												
+											</td>
 										@elseif( $item->status == 1)
-											<td>Đã kích hoạt</td>
+											<td>Đã kích hoạt<br />
+												<a href = "{!! URL::route('admin.customer.changeStatus',$item->id) !!}">Tắt</a>												
+											</td>
 										@endif
 										<td>
 											<a href = "#">Xem</a>
-											<a href = "#">Xóa</a>
+											<a href = "{!! URL::route('admin.customer.getDelete',$item->id) !!}">Xóa</a>
 										</td>
 									</tr>
 								}
@@ -105,21 +111,25 @@
 						</div>
 						<nav>
 							<ul class="pagination">
-								<li>
-									<a href="#" aria-label="Previous">
-										<span aria-hidden="true">&laquo;</span>
-									</a>
-								</li>
-								<li class = "active"><a href="#">1</a></li>
-								<li><a href="#">2</a></li>
-								<li><a href="#">3</a></li>
-								<li><a href="#">4</a></li>
-								<li><a href="#">5</a></li>
-								<li>
-									<a href="#" aria-label="Next">
-										<span aria-hidden="true">&raquo;</span>
-									</a>
-								</li>
+								@if($list_customer->currentPage() != 1)
+									<li>
+										<a href="{!! str_replace('/?','?',$list_customer->url($list_customer->currentPage() - 1)) !!}" aria-label="Previous">
+											<span aria-hidden="true">&laquo;</span>
+										</a>
+									</li>
+									@endif
+									@for($i=1;$i<=$list_customer->lastPage();$i=$i+1)
+									<li class = "{!! ($list_customer->currentPage() == $i) ? 'active' : '' !!}">
+										<a href="{!! str_replace('/?','?',$list_customer->url($i)) !!}">{{ $i }}</a>
+									</li>
+									@endfor
+									@if($list_customer->currentPage() != $list_customer->lastPage())
+									<li>
+										<a href="{!! str_replace('/?','?',$list_customer->url($list_customer->currentPage() + 1)) !!}" aria-label="Next">
+											<span aria-hidden="true">&raquo;</span>
+										</a>
+									</li>
+								@endif
 							</ul>
 						</nav>
 					</div>

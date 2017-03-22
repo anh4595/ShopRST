@@ -58,4 +58,20 @@ class FooterController extends Controller
         $footer->save();
         return redirect()->route('admin.extend.footer');
     }
+
+    public function changeStatus($id)
+    {
+        $footer=Footers::find($id);
+        if($footer->status != 1)
+        {
+            $footer->status = 1;
+            $footer->save();
+        }
+        else
+        {
+            $footer->status = 0;
+            $footer->save();
+        }
+        return redirect()->route('admin.extend.footer');
+    }
 }

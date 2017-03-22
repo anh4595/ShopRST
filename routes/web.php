@@ -28,7 +28,11 @@ Route::group(['prefix'=>'admin'],function(){
     //Cấu hình route cho customer
     route::group(['prefix'=>'khach-hang'],function(){
         route::get('/',['as'=>'admin.customer.customer','uses'=>'CustomerController@Home']);
-        route::get('hom-thu-gop-y',['as'=>'admin.customer.feedback','uses'=>'CustomerController@HomeFeedback']);
+        route::get('xoa-khach-hang/{id}',['as'=>'admin.customer.getDelete','uses'=>'CustomerController@getDelete']);
+        route::get('thay-doi-status-customer/{id}',['as'=>'admin.customer.changeStatus','uses'=>'CustomerController@changeStatus']);
+
+        route::get('hom-thu-gop-y',['as'=>'admin.customer.feedback','uses'=>'FeedbackController@HomeFeedback']);
+        route::get('xoa-feedback/{id}',['as'=>'admin.feedback.getDelete','uses'=>'FeedbackController@getDelete']);
     });
 
     //Cấu hình route cho post
@@ -39,27 +43,36 @@ Route::group(['prefix'=>'admin'],function(){
         route::get('bai-viet',['as'=>'admin.post.post','uses'=>'PostController@Home']);
         route::get('them-bai-viet',['as'=>'admin.post.addpost','uses'=>'PostController@getPost']);
         route::post('them-bai-viet',['as'=>'admin.post.addpost','uses'=>'PostController@postPost']);
+        route::get('thay-doi-status-post/{id}',['as'=>'admin.post.changeStatus','uses'=>'PostController@changeStatus']);
         route::get('xoa-bai-viet/{id}',['as'=>'admin.post.getDelete','uses'=>'PostController@getDelete']);
+        route::get('sua-bai-viet/{id}',['as'=>'admin.post.getEdit','uses'=>'PostController@getEdit']);
+        route::post('sua-bai-viet/{id}',['as'=>'admin.post.postEdit','uses'=>'PostController@postEdit']);
 
         //Cấu hình route cho nhóm bài viết thuộc quản lý nhóm danh mục bài viết
         route::get('danh-muc-bai-viet',['as'=>'admin.post.postcategory','uses'=>'PostCategoryController@Home']);
         route::get('them-danh-muc-bai-viet',['as'=>'admin.post.postcategory','uses'=>'PostCategoryController@getPostCategory']);
         route::post('them-danh-muc-bai-viet',['as'=>'admin.post.postcategory','uses'=>'PostCategoryController@postPostCategory']);
         route::get('xoa-danh-muc-bai-viet/{id}',['as'=>'admin.postcategory.getDelete','uses'=>'PostCategoryController@getDelete']);
-        Route::get('sua-danh-muc-bai-viet',function(){
-            return view('admin.post.editpostcategory');
-        });
-    });
+        route::get('thay-doi-status-postcate/{id}',['as'=>'admin.postcategory.changeStatus','uses'=>'PostCategoryController@changeStatus']);
+        route::get('sua-danh-muc-bai-viet/{id}',['as'=>'admin.postcategory.getEdit','uses'=>'PostCategoryController@getEdit']);
+        route::post('sua-danh-muc-bai-viet/{id}',['as'=>'admin.postcategory.postEdit','uses'=>'PostCategoryController@postEdit']);
 
+    });
     //Cấu hình route cho product
     route::group(['prefix'=>'san-pham'],function(){
         route::get('/',function(){
                 return view('admin.product.product');
             });
+
         route::get('san-pham',['as'=>'admin.product.product','uses'=>'ProductController@Home']);
         route::get('them-san-pham',['as'=>'admin.product.addproduct','uses'=>'ProductController@getProduct']);
         route::post('them-san-pham',['as'=>'admin.product.addproduct','uses'=>'ProductController@postProduct']);
         route::get('xoa-san-pham/{id}',['as'=>'admin.product.getDelete','uses'=>'ProductController@getDelete']);
+        route::get('xoa-multi-san-pham',['as'=>'admin.product.multiDelete','uses'=>'ProductController@multiDelete']);
+        route::get('thay-doi-status-sp/{id}',['as'=>'admin.product.changeStatus','uses'=>'ProductController@changeStatus']);
+        route::get('thay-doi-hot/{id}',['as'=>'admin.product.changeHot','uses'=>'ProductController@changeHot']);
+        route::get('thay-doi-sale/{id}',['as'=>'admin.product.changeSale','uses'=>'ProductController@changeSale']);
+        route::get('thay-doi-home/{id}',['as'=>'admin.product.changeHome','uses'=>'ProductController@changeHome']);       
         route::get('sua-san-pham/{id}',['as'=>'admin.product.getEdit','uses'=>'ProductController@getEdit']);
         route::post('sua-san-pham/{id}',['as'=>'admin.product.postEdit','uses'=>'ProductController@postEdit']);
 
@@ -69,9 +82,10 @@ Route::group(['prefix'=>'admin'],function(){
         route::get('them-danh-muc-san-pham',['as'=>'admin.product.productcategory','uses'=>'ProductCategoryController@getProductCategory']);
         route::post('them-danh-muc-san-pham',['as'=>'admin.product.productcategory','uses'=>'ProductCategoryController@postProductCategory']);
         route::get('xoa-danh-muc-san-pham/{id}',['as'=>'admin.productcategory.getDelete','uses'=>'ProductCategoryController@getDelete']);
-        Route::get('sua-danh-muc-san-pham',function(){
-            return view('admin.product.editproductcategory');
-        });
+        route::get('thay-doi-status/{id}',['as'=>'admin.productcategory.changeStatus','uses'=>'ProductCategoryController@changeStatus']);
+        route::get('xoa-multi',['as'=>'admin.productcategory.multiDelete','uses'=>'ProductCategoryController@multiDelete']);
+        route::get('sua-danh-muc-san-pham/{id}',['as'=>'admin.productcategory.getEdit','uses'=>'ProductCategoryController@getEdit']);
+        route::post('sua-danh-muc-san-pham/{id}',['as'=>'admin.productcategory.postEdit','uses'=>'ProductCategoryController@postEdit']);
 
         route::get('size',['as'=>'admin.product.size','uses'=>'SizeController@Home']);
         route::get('them-size',['as'=>'admin.product.size','uses'=>'SizeController@getSize']);
@@ -93,6 +107,7 @@ Route::group(['prefix'=>'admin'],function(){
             route::get('them-gioi-thieu',['as'=>'admin.extend.addabout','uses'=>'AboutController@getAbout']);
             route::post('them-gioi-thieu',['as'=>'admin.extend.addabout','uses'=>'AboutController@postAbout']);
             route::get('xoa-gioi-thieu/{id}',['as'=>'admin.about.getDelete','uses'=>'AboutController@getDelete']);
+            route::get('thay-doi-status-about/{id}',['as'=>'admin.about.changeStatus','uses'=>'AboutController@changeStatus']);
             route::get('sua-gioi-thieu/{id}',['as'=>'admin.about.getEdit','uses'=>'AboutController@getEdit']);
             route::post('sua-gioi-thieu/{id}',['as'=>'admin.about.postEdit','uses'=>'AboutController@postEdit']);
         });
@@ -102,6 +117,7 @@ Route::group(['prefix'=>'admin'],function(){
             route::get('them-lien-he',['as'=>'admin.extend.addcontact','uses'=>'ContactController@getContact']);
             route::post('them-lien-he',['as'=>'admin.extend.addcontact','uses'=>'ContactController@postContact']);
             route::get('xoa-lien-he/{id}',['as'=>'admin.contact.getDelete','uses'=>'ContactController@getDelete']);
+            route::get('thay-doi-status-contact/{id}',['as'=>'admin.contact.changeStatus','uses'=>'ContactController@changeStatus']);
             route::get('sua-lien-he/{id}',['as'=>'admin.contact.getEdit','uses'=>'ContactController@getEdit']);
             route::post('sua-lien-he/{id}',['as'=>'admin.contact.postEdit','uses'=>'ContactController@postEdit']);
         });
@@ -111,6 +127,7 @@ Route::group(['prefix'=>'admin'],function(){
             route::get('them-chan-trang',['as'=>'admin.extend.addfooter','uses'=>'FooterController@getFooter']);
             route::post('them-chan-trang',['as'=>'admin.extend.addfooter','uses'=>'FooterController@postFooter']);
             route::get('xoa-chan-trang/{id}',['as'=>'admin.footer.getDelete','uses'=>'FooterController@getDelete']);
+            route::get('thay-doi-status-footer/{id}',['as'=>'admin.footer.changeStatus','uses'=>'FooterController@changeStatus']);
             route::get('sua-chan-trang/{id}',['as'=>'admin.footer.getEdit','uses'=>'FooterController@getEdit']);
             route::post('sua-chan-trang/{id}',['as'=>'admin.footer.postEdit','uses'=>'FooterController@postEdit']);
         });
@@ -120,6 +137,7 @@ Route::group(['prefix'=>'admin'],function(){
             route::get('them-slide-anh',['as'=>'admin.extend.addslide','uses'=>'SlideController@getSlide']);
             route::post('them-slide-anh',['as'=>'admin.extend.addslide','uses'=>'SlideController@postSlide']);
             route::get('xoa-slide-anh/{id}',['as'=>'admin.slide.getDelete','uses'=>'SlideController@getDelete']);
+            route::get('thay-doi-status-slide/{id}',['as'=>'admin.slide.changeStatus','uses'=>'SlideController@changeStatus']);
             route::get('sua-slide-anh/{id}',['as'=>'admin.slide.getEdit','uses'=>'SlideController@getEdit']);
             route::post('sua-slide-anh/{id}',['as'=>'admin.slide.postEdit','uses'=>'SlideController@postEdit']);
         });

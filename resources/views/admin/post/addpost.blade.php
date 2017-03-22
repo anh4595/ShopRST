@@ -48,14 +48,16 @@
 											<div class = "form-group">
 												<label>Metakeyword</label>
 												<input type = "text" class = "form-control" name="metakeyword" placeholder = "xe-o-to-can-cau">
-											</div>
+											</div>									
 											<div class = "form-group">
 												<label>Mô tả nội dung</label>
-												<textarea class = "form-control" name="description" rows = "2"></textarea>
+												<textarea class = "form-control" name="descriptions" rows = "4" ></textarea>
+												<script type="text/javascript">ckeditor("descriptions")</script>
 											</div>
 											<div class = "form-group">
 												<label>Nội dung chi tiết</label>
-												<textarea class = "form-control" name="detail" rows = "8" ></textarea>
+												<textarea class = "form-control" name="detail" rows = "4" ></textarea>
+												<script type="text/javascript">ckeditor("detail")</script>
 											</div>
 											<div class = "form-group">
 												<label>Tags</label>

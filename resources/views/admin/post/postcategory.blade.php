@@ -1,8 +1,10 @@
 @extends('admin.shared')
 @section('content')
 <?php
-	$list_postcategory = DB::table('postcategories')->orderBy('id')->get();
-    $count_postcategory = count($list_postcategory);
+	$list_postcategory = DB::table('postcategories')->orderBy('id')->paginate(15);
+
+	$list_count = DB::table('postcategories')->orderBy('id')->get();
+    $count_postcategory = count($list_count);
 
 	$count_enable = 0;
 	$count_disable = 0;
@@ -55,9 +57,23 @@
 									<input type = "text" class = "form-control" name="metatitle" placeholder = "Nhập tên slug của bạn">
 									<p><i>Bạn có thể đặt tên Metatitle (hiển thị trên URL) theo ý của mình hoặc để nguyên.</i></p>
 								</div>	
+							   <div class = "form-group">
+									<label>Chọn danh mục cha</label>
+									<select class = "form-control" name="category_id">
+										<option value="NULL">Không có cha</option>
+                                        <?php
+                                            $list_parent=DB::table('postcategories')->get();
+                                        ?>
+                                        @foreach($list_parent as $item)
+                                            <option value="{!! $item->id !!}">{!! $item->name !!}</option>
+                                        @endforeach
+									</select>
+									<p><i>Bạn có để nó làm danh mục con của danh mục nào không. Nếu không thì bạn chọn mục "Không có cha".</i></p>
+								</div>	
 								<div class = "form-group">
 									<label>Mô tả</label>
-									<textarea class = "form-control" name="description" rows = "3"></textarea>
+									<textarea class = "form-control" name="descriptions" rows = "3"></textarea>
+									<script type="text/javascript">ckeditor("descriptions")</script>
 									<p><i>	Bạn có thể mô tả thêm về danh mục này chứa những phần gì, bài viết nào, sản phẩm nào... 
 											Bạn có thể để trống, không bắt buộc.</i></p>
 								</div>
@@ -112,9 +128,7 @@
                                             <tr>
                                                 <th><input type = "checkbox" value = "" /></th>
                                                 <th>Tên danh mục</th>
-                                                <th>Mô tả</th>
-                                                <th>Ngày tạo</th>
-                                                <th>Người tạo</th>                                               
+                                                <th>Mô tả</th>                                             
                                                 <th>Từ khóa</th>
                                                 <th>Trạng thái</th>
                                                 <th>Chức năng</th>
@@ -126,29 +140,49 @@
                                                     <td><input type = "checkbox" value = "" /></td>
                                                     <td>{!! $item->name !!}</td>
                                                     <td>{!! $item->description !!}</td>
-                                                    <td>{!! $item->created_at !!}</td>
-                                                    <td>{!! $item->createdby !!}</td>
                                                     <td>{!! $item->metatitle !!}</td>
 													@if($item->status == 0)
-														<td>Chưa kích hoạt</td>
+														<td>Chưa kích hoạt <br />
+															<a href = "{!! URL::route('admin.postcategory.changeStatus',$item->id) !!}">Bật</a>			
+														</td>
 													@elseif( $item->status == 1)
-														<td>Đã kích hoạt</td>
+														<td>Đã kích hoạt <br />
+															<a href = "{!! URL::route('admin.postcategory.changeStatus',$item->id) !!}">Tắt</a>
+														</td>
 													@endif
                                                     <td>
-                                                        <a href = "{!! URL('admin/bai-viet/sua-danh-muc-bai-viet') !!}">Sửa</a>
-                                                       	<a href = "{!! URL::route('admin.postcategory.getDelete',$item->id) !!}" value="{!! $item->id !!}">Xóa</a>
+                                                        <a href = "{!! URL::route('admin.postcategory.getEdit',$item->id) !!}">Sửa |</a>
+                                                       	<a href = "{!! URL::route('admin.postcategory.getDelete',$item->id) !!}">Xóa</a>
                                                     </td>
                                                 </tr>
                                             @endforeach
 										</tbody>
 									</table>
 								</div>
+								<nav>
+									<ul class="pagination">
+										@if($list_postcategory->currentPage() != 1)
+										<li>
+											<a href="{!! str_replace('/?','?',$list_postcategory->url($list_postcategory->currentPage() - 1)) !!}" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+										@endif
+										@for($i=1;$i<=$list_postcategory->lastPage();$i=$i+1)
+										<li class = "{!! ($list_postcategory->currentPage() == $i) ? 'active' : '' !!}">
+											<a href="{!! str_replace('/?','?',$list_postcategory->url($i)) !!}">{{ $i }}</a>
+										</li>
+										@endfor
+										@if($list_postcategory->currentPage() != $list_postcategory->lastPage())
+										<li>
+											<a href="{!! str_replace('/?','?',$list_postcategory->url($list_postcategory->currentPage() + 1)) !!}" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+										@endif
+									</ul>
+								</nav>
 							</div>
-							<p>	
-								<i>	Chú ý: Việc bạn xóa bỏ danh mục không làm ảnh hưởng đến các bài viết. Tất cả các bài viết nằm trong
-									danh mục bị xóa hoặc chưa có tên trong danh mục sẽ được để mặc định trong danh mục tên là "Chưa có". 
-								</i>
-							</p>
 						</div>
 					</div>
 				</div>

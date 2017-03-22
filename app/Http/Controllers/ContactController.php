@@ -71,4 +71,20 @@ class ContactController extends Controller
         $contact->save();
         return redirect()->route('admin.extend.contact');
     }
+
+    public function changeStatus($id)
+    {
+        $contact=Contacts::find($id);
+        if($contact->status != 1)
+        {
+            $contact->status = 1;
+            $contact->save();
+        }
+        else
+        {
+            $contact->status = 0;
+            $contact->save();
+        }
+        return redirect()->route('admin.extend.contact');
+    }
 }

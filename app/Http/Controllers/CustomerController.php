@@ -13,15 +13,27 @@ class CustomerController extends Controller
         return view('admin.customer.customer');
     }
 
-    public function HomeFeedback()
-    {
-        return view('admin.customer.feedback');
-    }
 
     public function getDelete($id)
     {
         $customer = Customers::find($id);
         $customer->delete($id);
+        return redirect()->route('admin.customer.customer');
+    }
+
+    public function changeStatus($id)
+    {
+        $customer=Customers::find($id);
+        if($customer->status != 1)
+        {
+            $customer->status = 1;
+            $customer->save();
+        }
+        else
+        {
+            $customer->status = 0;
+            $customer->save();
+        }
         return redirect()->route('admin.customer.customer');
     }
     

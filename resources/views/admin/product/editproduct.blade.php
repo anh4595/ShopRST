@@ -20,7 +20,7 @@
 			</div>
 		</div>
 		<div class = "row margin0 space-top">
-			<form action="{!! route('admin.product.addproduct') !!}" method="POST">
+			<form action="" method="POST">
 				<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
 				<div class = "col-xs-12 col-sm-12 col-md-8 col-lg-9">
 					<div class = "panel panel-default">
@@ -51,15 +51,18 @@
 							</div>
 							<div class = "form-group">
                                 <label>Mô tả nội dung</label>
-								<textarea class = "form-control" name="description" rows = "2" value="{!! old('description',isset($product) ? $product['description'] : NULL) !!}"></textarea>
+								<textarea class = "form-control" name="descriptions" rows = "2">{!! old('description',isset($product) ? $product['description'] : NULL) !!}</textarea>
+								<script type="text/javascript">ckeditor("descriptions")</script>
 							</div>
 							<div class = "form-group">
                                 <label>Nội dung chi tiết</label>
-								<textarea class = "form-control" name="detail" rows = "8" value="{!! old('detail',isset($product) ? $product['detail'] : NULL) !!}"></textarea>
+								<textarea class = "form-control" name="detail" rows = "8">{!! old('detail',isset($product) ? $product['detail'] : NULL) !!}</textarea>
+								<script type="text/javascript">ckeditor("detail")</script>
 							</div>
                 	        <div class = "form-group">
 								<label>Tags</label>
-								<div class = "panel-body">
+								<input type = "text" class = "form-control" name="tagproduct" value="{!! old('tagproduct',isset($product) ? $product['tag'] : NULL) !!}">
+								<div class = "panel-body">					
 									<?php
 										$list_tagproduct=DB::table('tags')->where('type','product')->get();
 									?>
@@ -70,6 +73,7 @@
 							</div>
 							<div class = "form-group">
 								<label>Sizes</label>
+								<input type = "text" class = "form-control" name="sizeproduct" value="{!! old('sizeproduct',isset($product) ? $product['size'] : NULL) !!}">
 								<div class = "panel-body">
 									<?php
 										$list_size=DB::table('sizes')->get();
@@ -124,14 +128,12 @@
 							<span class = "glyphicon glyphicon-folder-open" aria-hidden = "true">&nbsp;</span>Danh mục
 						</div>
 						<div class = "panel-body">
-							<?php
-								$list_category=DB::table('productcategories')->orderby('id')->get();
-							?>
-							@foreach($list_category as $item)
-							<div class = "checkbox">
-								<label><input type = "radio" name="category_id" value="{!! old('category_id',isset($product) ? $product['category_id'] : NULL) !!}">{!! $item->name !!}</label>
-							</div>
-							@endforeach()
+							<select class = "form-control" name="cate_id">
+								<option value="0">Không có cha</option>
+                                <?php
+                                    cate_parent($parent,0,$product["category_id"])
+                                ?>
+							</select>
 						</div>
 					</div>
 
@@ -140,8 +142,15 @@
 							<span class = "glyphicon glyphicon-picture" aria-hidden = "true">&nbsp;</span>Ảnh đại diện
 						</div>
 						<div class = "panel-body">
+							<div class="form-group">
+                                <label>Ảnh đại diện (cũ)</label>
+                                <img style="width:60%;height:60%;margin-left: 20%;" src="{{url('public/assets/data/'.$product['image']) }}" class="img_current"/>
+                            	<input type="hidden" name="img_current" value="{!! $product['image'] !!}"/>
+                            </div>
+						</div>
+						<div class = "panel-body">
 							<div class = "form-group">
-								<input type = "file" name="image" value="{!! old('image',isset($product) ? $product['image'] : NULL) !!}">
+								<input type = "file" name="image">
 							</div>
 						</div>
 					</div>
@@ -167,18 +176,7 @@
 					</div>
 
 					<div class = "panel panel-default">
-						<div class = "panel-heading">
-							<span class = "glyphicon glyphicon-ok" aria-hidden = "true">&nbsp;</span>Trạng thái
-						</div>
-
 						<div class = "panel-body">
-							<div class = "form-group">
-								<label>Ngày đăng</label>
-								<?php 
-									$timezone = +7;
-									echo '<input type="text"  class = "form-control" value="'.gmdate("d-m-Y", time() + 3600*($timezone+date("I"))).'">';
-								?>
-							</div>
 							<div class = "form-group">
 								<label>Người đăng</label>
 								<input type="text" class = "form-control" name="createby" value="{!! old('createby',isset($product) ? $product['create_by'] : NULL) !!}">

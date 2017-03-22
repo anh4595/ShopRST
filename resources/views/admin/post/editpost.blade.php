@@ -20,7 +20,7 @@
 						</div>
 					</div>
 					<div class = "row margin0 space-top">
-						<form action="{!! route('admin.post.addpost') !!}" method="POST">
+						<form action="" method="POST">
 							<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
 								<div class = "col-xs-12 col-sm-12 col-md-8 col-lg-9">
 									<div class = "panel panel-default">
@@ -39,23 +39,25 @@
 										<div class = "panel-body">
 											<div class = "form-group">
 												<label>Tiêu đề bài viết</label>
-												<input type = "text" class = "form-control" name="namepost" placeholder = "Nhập tiêu đề bài viết">
+												<input type = "text" class = "form-control" name="namepost" placeholder = "Nhập tiêu đề bài viết" value="{!! old('namepost',isset($post) ? $post['name'] : NULL) !!}">
 											</div>
 											<div class = "form-group">
 												<label>Metatitle</label>
-												<input type = "text" class = "form-control" name="metatitle" placeholder = "xe oto can cau">
+												<input type = "text" class = "form-control" name="metatitle" placeholder = "xe oto can cau" value="{!! old('metatitle',isset($post) ? $post['metatitle'] : NULL) !!}">
 											</div>
 											<div class = "form-group">
 												<label>Metakeyword</label>
-												<input type = "text" class = "form-control" name="metakeyword" placeholder = "xe-o-to-can-cau">
+												<input type = "text" class = "form-control" name="metakeyword" placeholder = "xe-o-to-can-cau" value="{!! old('metakeyword',isset($post) ? $post['metakeyword'] : NULL) !!}">
 											</div>
 											<div class = "form-group">
 												<label>Mô tả nội dung</label>
-												<textarea class = "form-control" name="description" rows = "2"></textarea>
+												<textarea class = "form-control" name="descriptions" rows = "4" >{!! old('descriptions',isset($post) ? $post['description'] : NULL) !!}</textarea>
+												<script type="text/javascript">ckeditor("descriptions")</script>
 											</div>
 											<div class = "form-group">
 												<label>Nội dung chi tiết</label>
-												<textarea class = "form-control" name="detail" rows = "8" ></textarea>
+												<textarea class = "form-control" name="detail" rows = "4">{!! old('detail',isset($post) ? $post['detail'] : NULL) !!}</textarea>
+												<script type="text/javascript">ckeditor("detail")</script>
 											</div>
 											<div class = "form-group">
 												<label>Tags</label>
@@ -77,19 +79,24 @@
 											<span class = "glyphicon glyphicon-folder-open" aria-hidden = "true">&nbsp;</span>Danh mục
 										</div>
 										<div class = "panel-body">
-										<?php
-											$list_category=DB::table('postcategories')->orderby('id')->get();
-										?>
-										@foreach($list_category as $item)
-											<div class = "checkbox">
-												<label><input type = "radio" name="category_id" value="{!! $item->id !!}">{!! $item->name !!}</label>
-											</div>
-										@endforeach()
+											<select class = "form-control" name="cate_id">
+												<option value="0">Không có cha</option>
+												<?php
+													cate_parent($parent,0,$post["category_id"])
+												?>
+											</select>
 										</div>
 									</div>
 									<div class = "panel panel-default">
 										<div class = "panel-heading">
 											<span class = "glyphicon glyphicon-picture" aria-hidden = "true">&nbsp;</span>Ảnh đại diện
+										</div>
+										<div class = "panel-body">
+											<div class="form-group">
+                                            	<label>Ảnh đại diện (cũ)</label>
+                                            	<img style="width:60%;height:60%;margin-left: 20%;" src="{{url('public/assets/data/'.$post['image']) }}" class="img_current"/>
+                                            	<input type="hidden" name="img_current" value="{!! $post['image'] !!}"/>
+                                        	</div>
 										</div>
 										<div class = "panel-body">
 											<div class = "form-group">
@@ -98,30 +105,14 @@
 										</div>
 									</div>
 									<div class = "panel panel-default">
-										<div class = "panel-heading">
-											<span class = "glyphicon glyphicon-ok" aria-hidden = "true">&nbsp;</span>Trạng thái
-										</div>
 										<div class = "panel-body">
-											<div class = "radio">
-												<label><input type="radio" name="status" value="1" checked>Hiển thị bài viết</label>
-											</div>
-											<div class = "radio">
-												<label><input type="radio" name="status" value="0">Chưa hiển thị bài viết</label>
-											</div>
-											<div class = "form-group">
-												<label>Ngày đăng</label>
-												<?php 
-													$timezone = +7;
-													echo '<input type="text"  class = "form-control" value="'.gmdate("d-m-Y", time() + 3600*($timezone+date("I"))).'">';
-												?>
-											</div>
 											<div class = "form-group">
 												<label>Người đăng</label>
-												<input type="text" class = "form-control" name="createby">
+												<input type="text" class = "form-control" name="updateby" value="{!! old('createby',isset($post) ? $post['updatedby'] : NULL) !!}">
 											</div>
 											<div class = "form-group">
 												<label>Người cập nhật</label>
-												<input type="text" class = "form-control" name="updateby">
+												<input type="text" class = "form-control" name="updateby" value="{!! old('updateby',isset($post) ? $post['updatedby'] : NULL) !!}">
 											</div>
 										</div>
 										<div class = "panel-footer">

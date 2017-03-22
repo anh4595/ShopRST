@@ -40,6 +40,7 @@
 										<div class = "form-group">
                                             <label>Nội dung chi tiết</label>
 											<textarea class = "form-control" name="detail" rows = "8" ></textarea>
+											<script type="text/javascript">ckeditor("detail")</script>
 										</div>
 										<div class = "panel panel-default">
 											<div class = "panel-heading">

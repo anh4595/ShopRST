@@ -10,10 +10,12 @@
                   <ul class="nav navbar-nav">
                     <li class="active"><a data-toggle="tab" href="#tab-4">Best Seller</a></li>
                     <li><a data-toggle="tab" href="#tab-5">Most Viewed</a></li>
-                    <li><a href="#">Women</a></li>
-                    <li><a href="#">Men</a></li>
-                    <li><a href="#">Kids</a></li>
-                    <li><a href="#">Accessories</a></li>
+                    <?php
+                        $list_catefashion=DB::table('productcategories')->where('parent_id',3)->where('status',1)->orderby('id')->get();
+                    ?>
+                    @foreach($list_catefashion as $itemfashion)
+                        <li><a href="#">{!! $itemfashion->name !!}</a></li>
+                    @endforeach
                   </ul>
                 </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
@@ -46,7 +48,7 @@
                                     <li>
                                         <div class="left-block">
                                             <a href="#">
-                                            <img class="img-responsive" alt="product" src="{{url('public/assets/data/'.$item->image )}}" /></a>
+                                            <img class="img-responsive" alt="product" src="{{url('public/assets/data/')}}" /></a>
                                             <div class="quick-view">
                                                     <a title="Add to my wishlist" class="heart" href="#"></a>
                                                     <a title="Add to compare" class="compare" href="#"></a>
@@ -57,10 +59,10 @@
                                             </div>
                                         </div>
                                         <div class="right-block">
-                                            <h5 class="product-name"><a href="#">{!! $item->name !!}</a></h5>
+                                            <h5 class="product-name"><a href="#"></a></h5>
                                             <div class="content_price">
-                                                <span class="price product-price">${!! $item->price !!}</span>
-                                                <span class="price old-price">${!! $item->promotionprice !!}</span>
+                                                <span class="price product-price">$</span>
+                                                <span class="price old-price">$</span>
                                             </div>
                                             <div class="product-star">
                                                 <i class="fa fa-star"></i>
@@ -71,7 +73,6 @@
                                             </div>
                                         </div>
                                     </li>
-                                    @endforeach()
                                 </ul>
                             </div>
                             <!-- tab product -->

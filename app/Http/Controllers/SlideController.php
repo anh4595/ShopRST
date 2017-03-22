@@ -60,4 +60,20 @@ class SlideController extends Controller
         $slide->save();
         return redirect()->route('admin.extend.slide');
     }
+
+    public function changeStatus($id)
+    {
+        $slide=Slides::find($id);
+        if($slide->status != 1)
+        {
+            $slide->status = 1;
+            $slide->save();
+        }
+        else
+        {
+            $slide->status = 0;
+            $slide->save();
+        }
+        return redirect()->route('admin.extend.slide');
+    }
 }

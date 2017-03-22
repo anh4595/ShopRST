@@ -16,9 +16,19 @@
 		<link href="{{url('public/admin/css/bootstrap.min.css')}}" rel="stylesheet" />
 		<link href="{{url('public/admin/css/layout.css')}}" rel="stylesheet" />
 
+<!-- ckeditor && ckfinder -->
+		<script src="{{url('public/admin/js/ckeditor/ckeditor.js')}}"></script>	
+		<script src="{{url('public/admin/js/ckfinder/ckfinder.js')}}"></script>	
+		<script type="text/javascript">
+			var baseURL="{!! URL('/') !!}"
+		</script>	
+		<script src="{{url('public/admin/js/func_ckfinder.js')}}"></script>	
+		
 		<script src="{{url('public/admin/js/jquery.min.js')}}"></script>
 		<script src="{{url('public/admin/js/bootstrap.min.js')}}"></script>
 		<script src="{{url('public/admin/js/chart.min.js')}}"></script>		
+
+		
 		
 		<!--[if lt IE 9]>
 		  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -61,7 +71,7 @@
 							</li>
 							<ul class = "sub-menu collapse" id = "extend">
 								<li><a href = "{!! URL('admin/mo-rong/gioi-thieu') !!}"><span class = "	glyphicon glyphicon-flag" aria-hidden = "true">&nbsp;</span>Giới thiệu website</a></li>
-								<li><a href = "{!! URL('admin/mo-rong/lien-he') !!}"><span class = "glyphicon glyphicon-bullhorn" aria-hidden = "true">&nbsp;</span>Thông tin hê hệ</a></li>
+								<li><a href = "{!! URL('admin/mo-rong/lien-he') !!}"><span class = "glyphicon glyphicon-bullhorn" aria-hidden = "true">&nbsp;</span>Thông tin liên hệ</a></li>
 								<li><a href = "{!! URL('admin/mo-rong/chan-trang') !!}"><span class = "glyphicon glyphicon-pushpin" aria-hidden = "true">&nbsp;</span>Footer website</a></li>
 								<li><a href = "{!! URL('admin/mo-rong/slide-anh') !!}"><span class = "glyphicon glyphicon-facetime-video" aria-hidden = "true">&nbsp;</span>Slide ảnh</a></li>
 								<li><a href = "{!! URL('admin/mo-rong/the-tag') !!}"><span class = "glyphicon glyphicon-tag" aria-hidden = "true">&nbsp;</span>Thẻ tag</a></li>

@@ -22,8 +22,9 @@ class PostCategoryController extends Controller
     {
         $postCategory = new PostCategories();
         $postCategory->name = $request->category;
-        $postCategory->metatitle = $request->metatitle;
-        $postCategory->description = $request->description;
+        $postCategory->metatitle = changeTitle($request->metatitle);
+        $postCategory->parent_id = $request->category_id;
+        $postCategory->description = $request->descriptions;
         $postCategory->updatedby = $request->updateby;
         $postCategory->createdby = $request->createby;
         if(isset($_POST['status']))
@@ -47,20 +48,42 @@ class PostCategoryController extends Controller
 
     public function getEdit($id)
     {
+        $parent = PostCategories::select('id','name','parent_id')->get()->toArray();
         $postCategory = PostCategories::findOrFail($id)->toArray();
-        return view('admin.extend.editfooter',compact('postCategory','id'));
+        return view('admin.post.editpostcategory',compact('parent','postCategory','id'));
 
     }
 
     public function postEdit(Request $request,$id)
     {
         $this->validate($request,
-            ["name" => "required"],
-            ["namecontact.required" => "Vui lòng nhập tên bài giới thiệu"]);
+            ["category" => "required"],
+            ["category.required" => "Vui lòng nhập tên bài giới thiệu"]);
 
         $postCategory = PostCategories::find($id);
-        $postCategory->content = $request->detail;
+        $postCategory->name = $request->category;
+        $postCategory->metatitle = changeTitle($request->metatitle);
+        $postCategory->parent_id = $request->category_id;
+        $postCategory->description = $request->descriptions;
+        $postCategory->updatedby = $request->updateby;
+        $postCategory->createdby = $request->createby;
         $postCategory->save();
-        return redirect()->route('admin.extend.footer');
+        return redirect()->route('admin.post.postcategory');
     }  
+
+    public function changeStatus($id)
+	{
+		$postCategory=PostCategories::find($id);
+		if($postCategory->status != 1)
+		        {
+			$postCategory->status = 1;
+			$postCategory->save();
+		}
+		else
+		        {
+			$postCategory->status = 0;
+			$postCategory->save();
+		}
+		return redirect()->route('admin.post.postcategory');
+	}
 }

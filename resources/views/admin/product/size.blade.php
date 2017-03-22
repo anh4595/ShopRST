@@ -1,8 +1,10 @@
 @extends('admin.shared')
 @section('content')
 <?php
-	$list_sizes = DB::table('sizes')->get();
-	$count_size = count($list_sizes);
+	$list_sizes = DB::table('sizes')->paginate(10);
+
+	$list_count = DB::table('sizes')->get();
+	$count_size = count($list_count);
 ?>
 	<h1><span class = "glyphicon glyphicon-folder-open addtop" aria-hidden = "true"></span>&nbsp;&nbsp;Danh mục sản phẩm</h1>	
 				<div id = "sub-main">
@@ -66,7 +68,7 @@
 							</div>
 							<div class = "row space-top box-total">
 								<div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                    <span><i>Tổng số kích thước: </i><strong>{!! $count_size !!}</strong></span>        
+                                    <span><i>Tổng số loại kích thước: </i><strong>{!! $count_size !!}</strong></span>        
 								</div>
 								<div class = "col-xs-6 col-sm-6 col-md-6 col-lg-6">
 									<div class = "text-right">
@@ -104,12 +106,30 @@
 										</tbody>
 									</table>
 								</div>
+								<nav>
+									<ul class="pagination">
+										@if($list_sizes->currentPage() != 1)
+										<li>
+											<a href="{!! str_replace('/?','?',$list_sizes->url($list_sizes->currentPage() - 1)) !!}" aria-label="Previous">
+												<span aria-hidden="true">&laquo;</span>
+											</a>
+										</li>
+										@endif
+										@for($i=1;$i<=$list_sizes->lastPage();$i=$i+1)
+										<li class = "{!! ($list_sizes->currentPage() == $i) ? 'active' : '' !!}">
+											<a href="{!! str_replace('/?','?',$list_sizes->url($i)) !!}">{{ $i }}</a>
+										</li>
+										@endfor
+										@if($list_sizes->currentPage() != $list_sizes->lastPage())
+										<li>
+											<a href="{!! str_replace('/?','?',$list_sizes->url($list_sizes->currentPage() + 1)) !!}" aria-label="Next">
+												<span aria-hidden="true">&raquo;</span>
+											</a>
+										</li>
+										@endif
+									</ul>
+								</nav>
 							</div>
-							<p>	
-								<i>	Chú ý: Việc bạn xóa bỏ danh mục không làm ảnh hưởng đến các bài viết. Tất cả các bài viết nằm trong
-									danh mục bị xóa hoặc chưa có tên trong danh mục sẽ được để mặc định trong danh mục tên là "Chưa có". 
-								</i>
-							</p>
 						</div>
 					</div>
 				</div>

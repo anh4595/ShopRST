@@ -43,7 +43,8 @@
 										</div>
 										<div class = "form-group">
                                             <label>Nội dung chi tiết</label>
-											<textarea class = "form-control" name="detail" rows = "8" value="{!! old('detail',isset($about) ? $about['detail'] : NULL) !!}" ></textarea>
+											<textarea class = "form-control" name="detail" rows = "8">{!! old('detail',isset($about) ? $about['detail'] : NULL) !!}</textarea>
+											<script type="text/javascript">ckeditor("detail")</script>
 										</div>
 										<div class = "form-group">
 											<label>Người đăng</label>

@@ -63,4 +63,20 @@ class AboutController extends Controller
         $about->save();
         return redirect()->route('admin.extend.about');
     }
+
+    public function changeStatus($id)
+    {
+        $about=Abouts::find($id);
+        if($about->status != 1)
+        {
+            $about->status = 1;
+            $about->save();
+        }
+        else
+        {
+            $about->status = 0;
+            $about->save();
+        }
+        return redirect()->route('admin.extend.about');
+    }
 }
