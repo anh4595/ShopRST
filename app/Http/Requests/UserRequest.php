@@ -13,7 +13,7 @@ class UserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+           	'username' =>'required',
+    		'password' => 'required|min:8|max:32'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'username.required' => 'Vui lòng nhập tài khoản đăng nhập',
+            'password.required' => 'Vui lòng nhập mật khẩu đăng nhập',
+            'password.min' => 'Mật khẩu phải chứa ít nhất 8 kí tự',
+			'password.max' => 'Mật khẩu phải chứa ít nhất 8 kí tự'
         ];
     }
 }

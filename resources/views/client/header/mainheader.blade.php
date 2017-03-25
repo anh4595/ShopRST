@@ -2,15 +2,19 @@
     <div class="container main-header">
         <div class="row">
             <div class="col-xs-12 col-sm-3 logo">
-                <a href="index-2.html"><img alt="Kute Shop" src="{{url('public/assets/images/logo.png')}}" /></a>
+                <a href="{!! URL('/') !!}"><img alt="Kute Shop" src="{{url('public/assets/images/logo.png')}}" /></a>
             </div>
             <div class="col-xs-7 col-sm-7 header-search-box">
                 <form class="form-inline">
                       <div class="form-group form-category">
                         <select class="select-category">
                             <option value="2">All Categories</option>
-                            <option value="1">Men</option>
-                            <option value="2">Women</option>
+                            <?php
+                                $list_cate=DB::table('productcategories')->where('status',1)->get();
+                            ?>
+                            @foreach($list_cate as $itemlist)
+                                <option value="{!! $itemlist->id !!}">{!! $itemlist->name !!}</option>
+                            @endforeach
                         </select>
                       </div>
                       <div class="form-group input-serach">

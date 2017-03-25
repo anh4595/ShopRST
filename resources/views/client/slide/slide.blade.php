@@ -4,10 +4,13 @@
             <div class="col-sm-9 header-top-right">
                 <div class="homeslider">
                     <div class="content-slide">
+                        <?php
+                            $list_slide=DB::table('slides')->where('status',1)->get();
+                        ?>
                         <ul id="contenhomeslider">
-                          <li><img alt="Funky roots" src="{{url('public/assets/data/slide.jpg')}}" title="Funky roots" /></li>
-                          <li><img alt="Funky roots" src="{{url('public/assets/data/slide.jpg')}}" title="Funky roots" /></li>
-                          <li><img  alt="Funky roots" src="{{url('public/assets/data/slide.jpg')}}" title="Funky roots" /></li>
+                        @foreach($list_slide as $item)
+                            <li><img alt="Funky roots" src="{{url('public/assets/data/'.$item->url)}}" title="{!! $item->name !!}" /></li>
+                        @endforeach
                         </ul>
                     </div>
                 </div>

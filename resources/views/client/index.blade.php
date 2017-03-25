@@ -27,8 +27,4 @@
     </div>
 </div>
 
-<div id="content-wrap">
-    @include('client.page.hot')
-</div>
-
 @endsection()

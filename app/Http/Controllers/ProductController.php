@@ -7,6 +7,7 @@ use App\Http\Requests\ProductRequest;
 use App\products;
 use App\productcategories;
 use App\producttags;
+use DB,Mail,Cart;
 
 class ProductController extends Controller
 {

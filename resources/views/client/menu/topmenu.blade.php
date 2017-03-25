@@ -5,20 +5,20 @@
                     <div class="box-vertical-megamenus">
                         <h4 class="title">
                             <span class="title-menu">Categories</span>
-                            <span class="btn-open-mobile pull-right home-page"><i class="fa fa-bars"></i></span>
+                            <span class="btn-open-mobile pull-right"><i class="fa fa-bars"></i></span>
                         </h4>
-                    <div class="vertical-menu-content is-home">
-                        <ul class="vertical-menu-list">
-                        <?php
-                            $list_categories=DB::table('productcategories')->where('parent_id',35)->where('status',1)->get();
-                        ?>
-                        @foreach($list_categories as $item)
-                            <li><a href="#"><img class="icon-menu" alt="Funky roots" src="{{url('public/assets/data/'.$item->image)}}">{!! $item->name !!}</a></li>
-                        @endforeach
-                        </ul>
-                        <div class="all-category"><span class="open-cate">All Categories</span></div>
+                        <div class="vertical-menu-content is-home">
+                            <ul class="vertical-menu-list">
+                            <?php
+                                $list_categories=DB::table('productcategories')->where('parent_id',35)->where('status',1)->get();
+                            ?>
+                            @foreach($list_categories as $item)
+                                <li><a href="{!! url('danh-sach-san-pham',[$item->id,$item->metatitle]) !!}"><img class="icon-menu" alt="Funky roots" src="{{url('public/assets/data/'.$item->image)}}">{!! $item->name !!}</a></li>
+                            @endforeach
+                            </ul>
+                            <div class="all-category"><span class="open-cate">All Categories</span></div>
+                        </div>
                     </div>
-                </div>
                 </div>
                 <div id="main-menu" class="col-sm-9 main-menu">
                     <nav class="navbar navbar-default">
@@ -31,13 +31,13 @@
                             </div>
                             <div id="navbar" class="navbar-collapse collapse">
                                 <ul class="nav navbar-nav">
-                                    <li class="active"><a href="#">Home</a></li>
+                                    <li class="active"><a href="{!! URL('/') !!}">Home</a></li>
                                     <?php
                                         $listmenu=DB::table('productcategories')->where('parent_id',0)->where('status',1)->get();
                                     ?>
                                     @foreach($listmenu as $item)
                                     <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">{!! $item->name !!}</a>
+                                        <a href="{!! url('danh-sach-san-pham',[$item->id,$item->metatitle]) !!}" class="dropdown-toggle" data-toggle="dropdown">{!! $item->name !!}</a>
                                         <ul class="dropdown-menu container-fluid">
                                             <li class="block-container">
                                                 <ul class="block">
@@ -45,7 +45,7 @@
                                                         $listmenu2=DB::table('productcategories')->where('parent_id',$item->id)->get();
                                                     ?>
                                                     @foreach($listmenu2 as $item2)
-                                                        <li class="link_container"><a href="#">{!! $item2->name !!}</a></li>
+                                                        <li class="link_container"><a href="{!! url('danh-sach-san-pham',[$item2->id,$item2->metatitle]) !!}">{!! $item2->name !!}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </li>

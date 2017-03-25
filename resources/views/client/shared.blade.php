@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/jquery.bxslider/jquery.bxslider.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/owl.carousel/owl.carousel.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/jquery-ui/jquery-ui.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/fancyBox/jquery.fancybox.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/animate.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/reset.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/style.css')}}" />
@@ -58,6 +59,9 @@
 <script type="text/javascript" src="{{url('public/assets/lib/jquery.bxslider/jquery.bxslider.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/lib/owl.carousel/owl.carousel.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/lib/jquery.countdown/jquery.countdown.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/jquery.elevatezoom.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/fancyBox/jquery.fancybox.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/js/jquery.actual.min.js')}}"></script>
 <script type="text/javascript" src="{{url('public/assets/js/theme-script.js')}}"></script>
 

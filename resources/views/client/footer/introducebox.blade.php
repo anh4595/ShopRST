@@ -3,14 +3,19 @@
                 <div class="col-md-3">
                     <div id="address-box">
                         <a href="#"><img src="{{url('public/assets/data/introduce-logo.png')}}" alt="" /></a>
+                        <?php
+                            $info=DB::table('contacts')->where('status',1)->get();
+                        ?>
+                        @foreach($info as $iteminfo)
                         <div id="address-list">
                             <div class="tit-name">Address:</div>
-                            <div class="tit-contain">Example Street 68, Mahattan, New York, USA.</div>
+                            <div class="tit-contain">{!! $iteminfo->address !!}</div>
                             <div class="tit-name">Phone:</div>
-                            <div class="tit-contain">+00 123 456 789</div>
+                            <div class="tit-contain">{!! $iteminfo->phone !!}</div>
                             <div class="tit-name">Email:</div>
-                            <div class="tit-contain">support@business.com</div>
+                            <div class="tit-contain">{!! $iteminfo->email !!}</div>
                         </div>
+                        @endforeach
                     </div> 
                 </div>
                 <div class="col-md-6">
@@ -18,11 +23,11 @@
                         <div class="col-sm-4">
                             <div class="introduce-title">Company</div>
                             <ul id="introduce-company"  class="introduce-list">
-                                <li><a href="#">About Us</a></li>
+                                <li><a href="{!! url('gioi-thieu') !!}">About Us</a></li>
                                 <li><a href="#">Testimonials</a></li>
                                 <li><a href="#">Affiliate Program</a></li>
                                 <li><a href="#">Terms & Conditions</a></li>
-                                <li><a href="#">Contact Us</a></li>
+                                <li><a href="{!! url('lien-he') !!}">Contact Us</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-4">

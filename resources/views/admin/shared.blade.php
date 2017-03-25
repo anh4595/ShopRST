@@ -97,15 +97,17 @@
 			<div id = "main">
 				<nav class = "navbar navbar-default">
 					<ul class = "nav navbar-nav navbar-right">
-						<li class = "active-child"><a href = "#">www.zeptain.vn</a></li>
+						<li class = "active-child"><a href = "#">www.rstshop.vn</a></li>
+						@if(isset($user_login))
 						<li class = "dropdown active">
-							<a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false">Zeptain Linh<span class = "caret caret-fix"></span></a>
+							<a href = "#" class = "dropdown-toggle" data-toggle = "dropdown" role = "button" aria-haspopup = "true" aria-expanded = "false">{!! $user_login->name !!}<span class = "caret caret-fix"></span></a>
 							<ul class = "dropdown-menu">
 								<li><a href = "doimatkhau.html"><span class = "glyphicon glyphicon-wrench" aria-hidden = "true">&nbsp;</span>Đổi mật khẩu</a></li>
 								<li role = "separator" class = "divider"></li>
-								<li><a href = "../Login/Login.html"><span class = "glyphicon glyphicon-off" aria-hidden = "true">&nbsp;</span>Thoát</a></li>
+								<li><a href = "{!! url('admin/logout') !!}"><span class = "glyphicon glyphicon-off" aria-hidden = "true">&nbsp;</span>Thoát</a></li>
 							</ul>
 						</li>
+						@endif
 					</ul>
 				</nav>
 

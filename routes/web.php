@@ -10,16 +10,29 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('admin/login', 'UserController@getLoginAdmin');
+Route::post('admin/login','UserController@postLoginAdmin');
+Route::get('admin/logout','UserController@postLogoutAdmin');
+
 Route::get('/',function(){
     return view('client.index');
 });
 
-//Route::get('index',['as'=>'client.index','uses'=>'ProductController@index']);
+Route::get('chi-tiet-san-pham/{id}/{metatitle}',['as'=>'detailProduct','uses'=>'HomeController@detailProduct']);
+Route::get('mua-hang/{id}/{metatitle}',['as'=>'cartProduct','uses'=>'HomeController@cartProduct']);
+Route::get('gio-hang',['as'=>'checkoutProduct','uses'=>'HomeController@checkoutProduct']);
+Route::get('xoa-san-pham/{id}',['as'=>'deleteProduct','uses'=>'HomeController@deleteProduct']);
+Route::get('cap-nhat-gio-hang/{id}/{qty}',['as'=>'updateCart','uses'=>'HomeController@updateCart']);
+Route::get('danh-sach-san-pham/{id}/{metatitle}',['as'=>'listProductCategory','uses'=>'HomeController@listProductCategory']);
+Route::get('danh-sach-san-pham-sale',['as'=>'listProductSale','uses'=>'HomeController@listProductSale']);
+Route::get('lien-he',['as'=>'contactCompany','uses'=>'HomeController@contactCompany']);
+route::get('gui-lien-he',['as'=>'client.other.contact','uses'=>'HomeController@getFeedback']);
+route::post('gui-lien-he',['as'=>'client.other.contact','uses'=>'HomeController@postFeedback']);
+Route::get('gioi-thieu',['as'=>'aboutCompany','uses'=>'HomeController@aboutCompany']);
+Route::get('tin-tuc',['as'=>'','listPost'=>'HomeController@listPost']);
 
-Route::group(['prefix'=>'admin'],function(){
-    Route::get('login',function(){
-        return view('login.login');
-    });
+Route::group(['prefix'=>'admin','middleware'=>'adminlogin'],function(){
 
     Route::get('/',function(){
         return view('admin.index');
