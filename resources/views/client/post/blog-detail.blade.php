@@ -2,15 +2,6 @@
 @section('content')
 <div class="columns-container">
     <div class="container" id="columns">
-        <!-- breadcrumb -->
-        <div class="breadcrumb clearfix">
-            <a class="home" href="#" title="Return to Home">Home</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <a class="home" href="#" title="Blog">Blog</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <span> Ut pharetra augue nec augue integer rutrum ante eu lacus</span>
-        </div>
-        <!-- ./breadcrumb -->
         <!-- row -->
         <div class="row">
             <!-- Left colunm -->
@@ -173,10 +164,12 @@
                 <!-- ./Banner -->
             </div>
             <!-- ./left colunm -->
+
             <!-- Center colunm-->
+            @foreach($post as $item)
             <div class="center_column col-xs-12 col-sm-9" id="center_column">
                 <h1 class="page-heading">
-                    <span class="page-heading-title2">Sed ut perspiciatis unde omnis iste natus error</span>
+                    <span class="page-heading-title2">{!! $item->name !!}</span>
                 </h1>
                 <article class="entry-detail">
                     <div class="entry-meta-data">
@@ -191,7 +184,7 @@
                         <span class="comment-count">
                             <i class="fa fa-comment-o"></i> 3
                         </span>
-                        <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
+                        <span class="date"><i class="fa fa-calendar"></i> {!! $item->created_at !!}</span>
                         <span class="post-star">
                             <i class="fa fa-star"></i>
                             <i class="fa fa-star"></i>
@@ -205,17 +198,8 @@
                         <img src="assets/data/blog-full.jpg" alt="Blog">
                     </div>
                     <div class="content-text clearfix">
-                        <p>Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.</p>
-
-                        <p>Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada at, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros.</p>
-
-                        <p>Integer rutrum ante eu lacus.Vestibulum libero nisl, porta vel, scelerisque eget, <a href="#">malesuada at</a>, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sollicitudin velit sed leo. Ut pharetra augue nec augue. </p>
-
-                        <p>Nam elit agna,endrerit sit amet, tincidunt ac, viverra sed, nulla. Donec porta diam eu massa. Quisque diam lorem, interdum vitae,dapibus ac, scelerisque vitae, pede. Donec eget tellus non erat lacinia fermentum. Donec in velit vel ipsum auctor pulvinar. Vestibulum iaculis lacinia est. Proin dictum elementum velit. Fusce euismod consequat ante. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Pellentesque sed dolor. Aliquam congue fermentum nisl. </p>
-                        <p>Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Integer rutrum ante eu lacus. Vestibulum libero nisl, porta vel, scelerisque eget, malesuada at, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros.</p>
-
-                        <p>Integer rutrum ante eu lacus.Vestibulum libero nisl, porta vel, scelerisque eget, <a href="#">malesuada at</a>, neque. Vivamus eget nibh. Etiam cursus leo vel metus. Nulla facilisi. Aenean nec eros. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse sollicitudin velit sed leo. Ut pharetra augue nec augue. </p>
-                    </div>
+                        <p>{!! $item->detai !!}</p>
+                     </div>
                     <div class="entry-tags">
                         <span>Tags:</span>
                         <a href="#">beauty,</a>
@@ -223,6 +207,7 @@
                         <a href="#">health</a>
                     </div>
                 </article>
+                @endforeach
                 <!-- Related Posts -->
                 <div class="single-box">
                     <h2>Related Posts</h2>

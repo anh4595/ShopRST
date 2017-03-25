@@ -1,14 +1,35 @@
-@extends('client.shared')
-@section('content')
+<!DOCTYPE html>
+<html>
+
+<!-- Mirrored from kutethemes.com/demo/kuteshop/html/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2015 07:31:04 GMT -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/bootstrap/css/bootstrap.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/font-awesome/css/font-awesome.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/select2/css/select2.min.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/jquery.bxslider/jquery.bxslider.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/owl.carousel/owl.carousel.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/jquery-ui/jquery-ui.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/lib/fancyBox/jquery.fancybox.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/animate.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/reset.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/style.css')}}" />
+    <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/responsive.css')}}" />
+    
+    <title>RST-Shop</title>
+</head>
+<body class="category-page">
+<!-- HEADER -->
+<div id="header" class="header">
+    @include('client.header.topheader')
+    @include('client.header.mainheader')
+    @include('client.menu.topmenu')
+</div>
+<!-- end header -->
+
 <div class="columns-container">
     <div class="container" id="columns">
-        <!-- breadcrumb -->
-        <div class="breadcrumb clearfix">
-            <a class="home" href="#" title="Return to Home">Home</a>
-            <span class="navigation-pipe">&nbsp;</span>
-            <span class="navigation_page">Blog</span>
-        </div>
-        <!-- ./breadcrumb -->
         <!-- row -->
         <div class="row">
             <!-- Left colunm -->
@@ -21,11 +42,12 @@
                         <div class="layered layered-category">
                             <div class="layered-content">
                                 <ul class="tree-menu">
-                                    <li><span></span><a href="#">News</a></li>
-                                    <li><span></span><a href="#">About Beauty</a></li>
-                                    <li><span></span><a href="#">Baby &amp; Mom</a></li>
-                                    <li><span></span><a href="#">Diet &amp; Fitness</a></li>
-                                    <li><span></span><a href="#">Promotions</a></li>
+                                <?php
+                                    $list_cate=DB::table('postcategories')->where('status',1)->orderby('created_at')->get();
+                                ?>
+                                @foreach($list_cate as $item)
+                                    <li><span></span><a href="{!! url('danh-sach-tin-tuc',[$item->id,$item->metatitle]) !!}">{!! $item->name !!}</a></li>
+                                @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -35,54 +57,31 @@
                 <!-- ./blog category  -->
                 <!-- Popular Posts -->
                 <div class="block left-module">
-                    <p class="title_block">Popular Posts</p>
+                    <p class="title_block">News Posts</p>
                     <div class="block_content">
                         <!-- layered -->
                         <div class="layered">
                             <div class="layered-content">
                                 <ul class="blog-list-sidebar clearfix">
+                                <?php
+                                    $list_post=DB::table('posts')->where('status',1)->orderby('created_at','DESC')->skip(0)->take(6)->get();
+                                ?>
+                                @foreach($list_post as $itempost)
                                     <li>
                                         <div class="post-thumb">
-                                            <a href="#"><img src="assets/data/blog-thumb1.jpg" alt="Blog"></a>
+                                            <a href="{!! url('chi-tiet-tin-tuc',[$itempost->id,$itempost->metatitle]) !!}"><img src="{{url('public/assets/data/'.$itempost->image)}}" alt="Blog"></a>
                                         </div>
                                         <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
+                                            <h5 class="entry_title"><a href="{!! url('chi-tiet-tin-tuc',[$itempost->id,$itempost->metatitle]) !!}">{!! $itempost->name !!}</a></h5>
                                             <div class="post-meta">
-                                                <span class="date"><i class="fa fa-calendar"></i> 2014-08-05</span>
+                                                <span class="date"><i class="fa fa-calendar"></i> {!! $itempost->created_at !!}</span>
                                                 <span class="comment-count">
                                                     <i class="fa fa-comment-o"></i> 3
                                                 </span>
                                             </div>
                                         </div>
                                     </li>
-                                    <li>
-                                        <div class="post-thumb">
-                                            <a href="#"><img src="assets/data/blog-thumb2.jpg" alt="Blog"></a>
-                                        </div>
-                                        <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                            <div class="post-meta">
-                                                <span class="date"><i class="fa fa-calendar"></i> 2014-08-05</span>
-                                                <span class="comment-count">
-                                                    <i class="fa fa-comment-o"></i> 3
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="post-thumb">
-                                            <a href="#"><img src="assets/data/blog-thumb3.jpg" alt="Blog"></a>
-                                        </div>
-                                        <div class="post-info">
-                                            <h5 class="entry_title"><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                            <div class="post-meta">
-                                                <span class="date"><i class="fa fa-calendar"></i> 2014-08-05</span>
-                                                <span class="comment-count">
-                                                    <i class="fa fa-comment-o"></i> 3
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </li>
+                                @endforeach
                                 </ul>
                             </div>
                         </div>
@@ -93,71 +92,21 @@
                 <!-- Banner -->
                 <div class="block left-module">
                     <div class="banner-opacity">
-                        <a href="#"><img src="assets/data/slide-left.jpg" alt="ads-banner"></a>
+                        <a href="#"><img src="{{url('public/assets/data/slide-left.jpg')}}" alt="ads-banner"></a>
                     </div>
                 </div>
                 <!-- ./Banner -->
-                <!-- Recent Comments -->
-                <div class="block left-module">
-                    <p class="title_block">Recent Comments</p>
-                    <div class="block_content">
-                        <!-- layered -->
-                        <div class="layered">
-                            <div class="layered-content">
-                                <ul class="recent-comment-list">
-                                    <li>
-                                        <h5><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                        <div class="comment">
-                                            "Consectetuer adipis. Mauris accumsan nulla vel diam. Sed in..."
-                                        </div>
-                                        <div class="author">Posted by <a href="#">Admin</a></div>
-                                    </li>
-                                    <li>
-                                        <h5><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                        <div class="comment">
-                                            "Consectetuer adipis. Mauris accumsan nulla vel diam. Sed in..."
-                                        </div>
-                                        <div class="author">Posted by <a href="#">Admin</a></div>
-                                    </li>
-                                    <li>
-                                        <h5><a href="#">Lorem ipsum dolor sit amet</a></h5>
-                                        <div class="comment">
-                                            "Consectetuer adipis. Mauris accumsan nulla vel diam. Sed in..."
-                                        </div>
-                                        <div class="author">Posted by <a href="#">Admin</a></div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- ./layered -->
-                    </div>
-                </div>
-                <!-- ./Recent Comments -->
                 <!-- tags -->
                 <div class="block left-module">
                     <p class="title_block">TAGS</p>
                     <div class="block_content">
                         <div class="tags">
-                            <a href="#"><span class="level1">actual</span></a>
-                            <a href="#"><span class="level2">adorable</span></a>
-                            <a href="#"><span class="level3">change</span></a>
-                            <a href="#"><span class="level4">consider</span></a>
-                            <a href="#"><span class="level3">phenomenon</span></a>
-                            <a href="#"><span class="level4">span</span></a>
-                            <a href="#"><span class="level1">spanegs</span></a>
-                            <a href="#"><span class="level5">spanegs</span></a>
-                            <a href="#"><span class="level1">actual</span></a>
-                            <a href="#"><span class="level2">adorable</span></a>
-                            <a href="#"><span class="level3">change</span></a>
-                            <a href="#"><span class="level4">consider</span></a>
-                            <a href="#"><span class="level2">gives</span></a>
-                            <a href="#"><span class="level3">change</span></a>
-                            <a href="#"><span class="level2">gives</span></a>
-                            <a href="#"><span class="level1">good</span></a>
-                            <a href="#"><span class="level3">phenomenon</span></a>
-                            <a href="#"><span class="level4">span</span></a>
-                            <a href="#"><span class="level1">spanegs</span></a>
-                            <a href="#"><span class="level5">spanegs</span></a>
+                        <?php
+                            $list_tag=DB::table('tags')->where('type','post')->get()
+                        ?>
+                        @foreach($list_tag as $itemtag)
+                            <a href="#"><span class="level1">{!! $itemtag->name !!}</span></a>
+                        @endforeach
                         </div>
                     </div>
                 </div>
@@ -165,50 +114,35 @@
                 <!-- Banner -->
                 <div class="block left-module">
                     <div class="banner-opacity">
-                        <a href="#"><img src="assets/data/slide-left2.jpg" alt="ads-banner"></a>
+                        <a href="#"><img src="{{url('public/assets/data/slide-left2.jpg')}}" alt="ads-banner"></a>
                     </div>
                 </div>
                 <!-- ./Banner -->
             </div>
             <!-- ./left colunm -->
+            <?php
+                $list_post=DB::table('posts')->where('status',1)->paginate(10);
+            ?>
             <!-- Center colunm-->
             <div class="center_column col-xs-12 col-sm-9" id="center_column">
                 <h2 class="page-heading">
                     <span class="page-heading-title2">Blog post</span>
                 </h2>
-                <div class="sortPagiBar clearfix">
-                    <span class="page-noite">Showing 1 to 7 of 45 (15 Pages)</span>
-                    <div class="bottom-pagination">
-                        <nav>
-                          <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">Next &raquo;</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </nav>
-                    </div>
-                </div>
                 <ul class="blog-posts">
+                @foreach($list_post as $item_post)
                     <li class="post-item">
                         <article class="entry">
                             <div class="row">
                                 <div class="col-sm-5">
                                     <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-1.jpg" alt="Blog">
+                                        <a href="{!! url('chi-tiet-tin-tuc',[$item_post->id,$item_post->metatitle]) !!}">
+                                            <img src="{{url('public/assets/data/'.$item_post->image)}}" alt="Blog">
                                         </a>
                                     </div>
                                 </div>
                                 <div class="col-sm-7">
                                     <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
+                                        <h3 class="entry-title"><a href="{!! url('chi-tiet-tin-tuc',[$item_post->id,$item_post->metatitle]) !!}">{!! $item_post->name !!}</a></h3>
                                         <div class="entry-meta-data">
                                             <span class="author">
                                             <i class="fa fa-user"></i> 
@@ -221,7 +155,7 @@
                                             <span class="comment-count">
                                                 <i class="fa fa-comment-o"></i> 3
                                             </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
+                                            <span class="date"><i class="fa fa-calendar"></i> {!! $item_post->created_at !!}</span>
                                         </div>
                                         <div class="post-star">
                                             <i class="fa fa-star"></i>
@@ -232,7 +166,7 @@
                                             <span>(7 votes)</span>
                                         </div>
                                         <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
+                                           {!! $item_post->description !!}
                                         </div>
                                         <div class="entry-more">
                                             <a href="#">Read more</a>
@@ -242,297 +176,31 @@
                             </div>
                         </article>
                     </li>
-                    <li class="post-item">
-                        <article class="entry">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-2.jpg" alt="Blog">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
-                                        <div class="entry-meta-data">
-                                            <span class="author">
-                                            <i class="fa fa-user"></i> 
-                                            by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
-                                            <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
-                                            </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
-                                        </div>
-                                        <div class="post-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <span>(7 votes)</span>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
-                                        </div>
-                                        <div class="entry-more">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-item">
-                        <article class="entry">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-3.jpg" alt="Blog">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
-                                        <div class="entry-meta-data">
-                                            <span class="author">
-                                            <i class="fa fa-user"></i> 
-                                            by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
-                                            <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
-                                            </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
-                                        </div>
-                                        <div class="post-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <span>(7 votes)</span>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
-                                        </div>
-                                        <div class="entry-more">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-item">
-                        <article class="entry">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-4.jpg" alt="Blog">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
-                                        <div class="entry-meta-data">
-                                            <span class="author">
-                                            <i class="fa fa-user"></i> 
-                                            by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
-                                            <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
-                                            </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
-                                        </div>
-                                        <div class="post-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <span>(7 votes)</span>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
-                                        </div>
-                                        <div class="entry-more">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-item">
-                        <article class="entry">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-5.jpg" alt="Blog">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
-                                        <div class="entry-meta-data">
-                                            <span class="author">
-                                            <i class="fa fa-user"></i> 
-                                            by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
-                                            <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
-                                            </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
-                                        </div>
-                                        <div class="post-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <span>(7 votes)</span>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
-                                        </div>
-                                        <div class="entry-more">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-item">
-                        <article class="entry">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-6.jpg" alt="Blog">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
-                                        <div class="entry-meta-data">
-                                            <span class="author">
-                                            <i class="fa fa-user"></i> 
-                                            by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
-                                            <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
-                                            </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
-                                        </div>
-                                        <div class="post-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <span>(7 votes)</span>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
-                                        </div>
-                                        <div class="entry-more">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </li>
-                    <li class="post-item">
-                        <article class="entry">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <div class="entry-thumb image-hover2">
-                                        <a href="#">
-                                            <img src="assets/data/blog-7.jpg" alt="Blog">
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="entry-ci">
-                                        <h3 class="entry-title"><a href="#">Sed ut perspiciatis unde omnis iste natus error</a></h3>
-                                        <div class="entry-meta-data">
-                                            <span class="author">
-                                            <i class="fa fa-user"></i> 
-                                            by: <a href="#">Admin</a></span>
-                                            <span class="cat">
-                                                <i class="fa fa-folder-o"></i>
-                                                <a href="#">News, </a>
-                                                <a href="#">Promotions</a>
-                                            </span>
-                                            <span class="comment-count">
-                                                <i class="fa fa-comment-o"></i> 3
-                                            </span>
-                                            <span class="date"><i class="fa fa-calendar"></i> 2014-08-05 07:01:49</span>
-                                        </div>
-                                        <div class="post-star">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star-half-o"></i>
-                                            <span>(7 votes)</span>
-                                        </div>
-                                        <div class="entry-excerpt">
-                                            Ut tellus dolor, dapibus eget, elementum vel, cursus eleifend, elit. Aenean auctor wisi et urna. Aliquam erat volutpat. Duis ac turpis. Donec sit amet eros. Lorem ipsum dolor sit amet, consecvtetuer adipiscing elit. Mauris fermentum dictum magna. Sed laoreet aliquam leo. Ut tellus dolor, dapibus eget, elementum vel.
-                                        </div>
-                                        <div class="entry-more">
-                                            <a href="#">Read more</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </li>
+                @endforeach
                 </ul>
                 <div class="sortPagiBar clearfix">
                     <div class="bottom-pagination">
                         <nav>
                           <ul class="pagination">
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">Next &raquo;</span>
-                              </a>
-                            </li>
+                            @if($list_post->currentPage() != 1)
+								<li>
+									<a href="{!! str_replace('/?','?',$list_post->url($list_post->currentPage() - 1)) !!}" aria-label="Previous">
+										<span aria-hidden="true">&laquo;</span>
+									</a>
+								</li>
+								@endif
+								@for($i=1;$i<=$list_post->lastPage();$i=$i+1)
+								<li class = "{!! ($list_post->currentPage() == $i) ? 'active' : '' !!}">
+									<a href="{!! str_replace('/?','?',$list_post->url($i)) !!}">{{ $i }}</a>
+								</li>
+								@endfor
+								@if($list_post->currentPage() != $list_post->lastPage())
+								<li>
+									<a href="{!! str_replace('/?','?',$list_post->url($list_post->currentPage() + 1)) !!}" aria-label="Next">
+										<span aria-hidden="true">&raquo;</span>
+									</a>
+								</li>
+							@endif
                           </ul>
                         </nav>
                     </div>
@@ -543,4 +211,33 @@
         <!-- ./row-->
     </div>
 </div>
-@endsection()
+
+<!-- Footer -->
+<footer id="footer">
+     <div class="container">
+        @include('client.footer.introducebox')
+        @include('client.footer.trademarkbox')
+        @include('client.footer.textbox')
+        @include('client.footer.menubox')
+    </div> 
+</footer>
+
+
+<a href="#" class="scroll_top" title="Scroll to Top" style="display: inline;">Scroll</a>
+<!-- Script-->
+<script type="text/javascript" src="{{url('public/assets/lib/jquery/jquery-1.11.2.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/bootstrap/js/bootstrap.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/select2/js/select2.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/jquery.bxslider/jquery.bxslider.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/owl.carousel/owl.carousel.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/jquery.countdown/jquery.countdown.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/jquery.elevatezoom.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/jquery-ui/jquery-ui.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/lib/fancyBox/jquery.fancybox.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/js/jquery.actual.min.js')}}"></script>
+<script type="text/javascript" src="{{url('public/assets/js/theme-script.js')}}"></script>
+
+</body>
+
+<!-- Mirrored from kutethemes.com/demo/kuteshop/html/blog.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2015 07:31:21 GMT -->
+</html>

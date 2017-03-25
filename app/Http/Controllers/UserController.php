@@ -38,16 +38,18 @@ class UserController extends Controller
     {
 		$login = [
 			'username' => $request->username,
-			'password' => $request->password,
+			// 'password' => $request->password,
 		];
 
-    	if(Auth::attempt($login))
+    	if(Auth::attempt($login,true))
 		{
-    		return redirect()->route('admin.index');
+			print_r("Vo admin");
+    		//return redirect()->route('admin.index');
     	}
 		else
 		{
-    		return redirect()->back();
+			print_r("Chua vo admin");
+    		// return redirect()->back();
     	}
     }
 

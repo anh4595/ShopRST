@@ -12,4 +12,11 @@ class user extends Authenticatable
     protected $fillable = ['id','username','password','name','phone','email','createdby','updatedby','group_id','status'];
 
     public $timestamps = true;
+
+    protected $primarykey = 'id';
+
+    public function getAuthIdentifier()
+    {
+        return $this->getKey('id');
+    }
 }

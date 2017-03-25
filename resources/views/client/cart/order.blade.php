@@ -16,7 +16,6 @@
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/reset.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/style.css')}}" />
     <link rel="stylesheet" type="text/css" href="{{url('public/assets/css/responsive.css')}}" />
-    
     <title>RST-Shop</title>
 </head>
 <body class="category-page">
@@ -33,7 +32,7 @@
     <div class="container" id="columns">
         <!-- page heading-->
         <h2 class="page-heading no-line">
-            <span class="page-heading-title2">Shopping Cart Summary</span>
+            <span class="page-heading-title2">THÔNG TIN GIỎ HÀNG</span>
         </h2>
         <!-- ../page heading-->
         <div class="page-content page-order">
@@ -44,12 +43,12 @@
                 <table class="table table-bordered table-responsive cart_summary">
                     <thead>
                         <tr>
-                            <th class="cart_product">Product</th>
-                            <th>Description</th>
-                            <th>Avail.</th>
-                            <th>Unit price</th>
-                            <th>Qty</th>
-                            <th>Total</th>
+                            <th class="cart_product">Sản phẩm</th>
+                            <th>Thông tin sản phẩm</th>
+                            <th>Tình trạng</th>
+                            <th>Giá tiền</th>
+                            <th>Số lượng</th>
+                            <th>Tông tiền</th>
                             <th class="action"><i class="fa fa-trash-o"></i></th>
                         </tr>
                     </thead>
@@ -66,12 +65,10 @@
                                     <small class="cart_ref">SKU : #{!! $item->id !!}</small><br>
                                     <small><a href="#">Size : S</a></small>
                                 </td>
-                                <td class="cart_avail"><span class="label label-success">In stock</span></td>
+                                <td class="cart_avail"><span class="label label-success">Trong kho</span></td>
                                 <td class="price"><span>${!! number_format($item->price,0,",",".") !!}</span></td>
                                 <td class="qty">
                                     <input class="form-control input-sm" type="text" value='{!! $item->qty !!}'>
-                                    <a href="#"><i class="fa fa-caret-up"></i></a>
-                                    <a href="#"><i class="fa fa-caret-down"></i></a>
                                 </td>
                                 <td class="price">
                                     <span>${!! number_format(($item->price)*($item->qty),0,",",".") !!}</span>
@@ -96,8 +93,8 @@
                     </tfoot>    
                 </table>
                 <div class="cart_navigation">
-                    <a class="prev-btn" href="{!! URL('/') !!}">Continue shopping</a>
-                    <a class="next-btn" href="#">Proceed to checkout</a>
+                    <a class="prev-btn" href="{!! URL('/') !!}">Tiếp tục mua hàng</a>
+                    <a class="next-btn" href="#">Thanh toán</a>
                 </div>
             </div>
         </div>

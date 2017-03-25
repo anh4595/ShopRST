@@ -58,10 +58,6 @@
                                 <input type="text" class="form-control input-sm" name="name" />
                             </div>
                             <div class="form-selector">
-                                <label>Địa chỉ</label>
-                                <input type="text" class="form-control input-sm" name="address" />
-                            </div>
-                            <div class="form-selector">
                                 <label>Địa chỉ Email</label>
                                 <input type="email" class="form-control input-sm" name="email" />
                             </div>

@@ -16,6 +16,9 @@ $(document).ready(function() {
                 if (data == "oke") {
                     window.location = "gio-hang"
                 }
+            },
+            error: function() {
+                alert("error!!!!");
             }
         });
     });

@@ -37,12 +37,12 @@
 				<span>
 					<img src = "{{url('public/login/images/user.png')}}" />
 				</span>
-				<input type = "text" name = "username" placeholder = "Tài khoản"  autofocus/><br />
+				<input type = "text" name = "username" id="username" placeholder = "Tài khoản"  autofocus/><br />
 
 				<span>
 					<img src = "{{url('public/login/images/lock.png')}}" />
 				</span>
-				<input type = "password" name = "password" placeholder = "Mật khẩu" /><br />
+				<input type = "password" name = "password" id="password" placeholder = "Mật khẩu" /><br />
 
 				<div class = "mirror mirror-child">
 					<input type = "submit" name = "submit" value = "Đăng nhập">

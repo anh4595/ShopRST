@@ -52,7 +52,7 @@
                                         </ul> 
                                     </li>
                                     @endforeach
-                                    <li><a href="#">Blog</a></li>
+                                    <li><a href="{!! url('tin-tuc') !!}">Blog</a></li>
                                 </ul>
                             </div><!--/.nav-collapse -->
                         </div>

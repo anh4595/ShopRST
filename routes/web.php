@@ -30,7 +30,9 @@ Route::get('lien-he',['as'=>'contactCompany','uses'=>'HomeController@contactComp
 route::get('gui-lien-he',['as'=>'client.other.contact','uses'=>'HomeController@getFeedback']);
 route::post('gui-lien-he',['as'=>'client.other.contact','uses'=>'HomeController@postFeedback']);
 Route::get('gioi-thieu',['as'=>'aboutCompany','uses'=>'HomeController@aboutCompany']);
-Route::get('tin-tuc',['as'=>'','listPost'=>'HomeController@listPost']);
+Route::get('tin-tuc',['as'=>'listPost','uses'=>'HomeController@listPost']);
+Route::get('chi-tiet-tin-tuc/{id}/{metatitle}',['as'=>'detailPost','uses'=>'HomeController@detailPost']);
+Route::get('danh-sach-tin-tuc/{id}/{metatitle}',['as'=>'listPostCategory','uses'=>'HomeController@listPostCategory']);
 
 Route::group(['prefix'=>'admin','middleware'=>'adminlogin'],function(){
 

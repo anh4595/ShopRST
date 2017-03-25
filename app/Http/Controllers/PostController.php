@@ -20,7 +20,7 @@ class PostController extends Controller
 	}
 	
 	public function postPost(PostRequest $request)
-	    {
+	{
 		$post = new Posts();
 		$post->name = $request->namepost;
 		$post->category_id = $request->category_id;

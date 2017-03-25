@@ -25,7 +25,7 @@ class UserRequest extends FormRequest
     {
         return [
            	'username' =>'required',
-    		'password' => 'required|min:8|max:32'
+    		// 'password' => 'required|min:8|max:32'
         ];
     }
 
@@ -33,9 +33,9 @@ class UserRequest extends FormRequest
     {
         return [
             'username.required' => 'Vui lòng nhập tài khoản đăng nhập',
-            'password.required' => 'Vui lòng nhập mật khẩu đăng nhập',
-            'password.min' => 'Mật khẩu phải chứa ít nhất 8 kí tự',
-			'password.max' => 'Mật khẩu phải chứa ít nhất 8 kí tự'
+            // 'password.required' => 'Vui lòng nhập mật khẩu đăng nhập',
+            // 'password.min' => 'Mật khẩu phải chứa ít nhất 8 kí tự',
+			// 'password.max' => 'Mật khẩu phải chứa ít nhất 32 kí tự'
         ];
     }
 }
